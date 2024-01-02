@@ -1,0 +1,111 @@
+body{                                                       /*Sfondo*/
+    background-image: url("../Images/WhiteWall.jpg");
+}
+
+li{
+    float: left;
+}
+
+
+.menu {                                          /*ul personalizzazione*/
+    list-style-type: none;
+    font-family: "Phosphate";
+    padding: 4px;
+}
+
+
+.menu button {                                            /* li personalizzazione */
+    min-width: 130px;
+    height: 50px;
+    border-radius: 30%;
+    background-color: black;
+    border: none;
+    font-size: 18px;
+    font-family: Phosphate;
+    color: white;
+    transition: font-size 0.5s,background-color 0.5s ;
+}
+
+
+
+.Right{                                          /* li di destra posizionamento */
+    float: right;
+    margin:0;
+    margin-top: 5px;
+}
+
+
+
+.menu  button:hover {                /* hover btn  */
+    background-color: #1C889E;
+    font-size: 22px;
+    transition:  background-color 0.9s, font-size 0.5s;
+}
+
+
+
+#logo{                                                      /*posizionamento del bottone con il logo*/
+    display: block;
+    background: transparent;
+    margin-left: 45%;
+    margin-top: 2%;
+    border: none;
+
+}
+
+
+#logo:hover {                                                /*hover logo*/
+    transform: rotateX(360deg);
+    transition: transform 1.5s ;
+}
+
+
+.dropdown-content {                                 /* LOGGED USER BUTTON */
+    display: none;
+    background-color: white;
+    color: black;
+    min-width: 120px;
+    height: 40px;
+}
+
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #1C889E;color: white}
+.dropdown:hover .dropdown-content {display: block;background-color: transparent}
+.dropdown:hover .dropbtn {background-color: #1C889E;}
+
+
+
+
+
+
+/*MEDIA QUERY */
+
+@media screen and (max-width:850px){
+
+
+    .menu li{
+        width: 100%;
+    }
+
+    .menu button{
+        display: block;
+        width: 100%;
+
+    }
+
+
+    #logo{
+        float: none;
+        margin-left: 34%;
+    }
+
+    #logo img{
+        width: 200px;
+        height: 200px;
+    }
+}
