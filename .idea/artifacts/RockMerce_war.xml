@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="RockMerce:war">
+    <output-path>$PROJECT_DIR$/RockMerce/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>RockMerce</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="RockMerce-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="RockMerce:war exploded" />
+    </root>
+  </artifact>
+</component>
