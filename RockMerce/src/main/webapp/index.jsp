@@ -126,33 +126,33 @@
 
 <ul class="guitar">
 
-    <form action="CatalogoElectric-Servlet">
+    <form action="CatalogoElectricControl">
         <li>
             <button id="CatalogoElectricBUTTON">    <!--BOUNDARY OBJECT !-->
                 <img id="electric" src="Images/elettrica.png" width=150" height="330">
-                <a id="elettrica" href="CatalogoElectric-Servlet">ELECTRIC</a>
+                <a id="elettrica" href="CatalogoElectricControl">ELECTRIC</a>
             </button>
         </li>
     </form>
 
 
 
-    <form action="CatalogoClassic-Servlet">
+    <form action="CatalogoClassicControl">
         <li>
             <button id="CatalogoClassicBUTTON">     <!--BOUNDARY OBJECT !-->
                 <img id="classic" src="Images/cla.png" width="150" height="330">
-                <a id="classica" href="CatalogoClassic-Servlet">CLASSICAL</a>
+                <a id="classica" href="CatalogoClassicControl">CLASSICAL</a>
             </button>
         </li>
     </form>
 
 
 
-    <form action="CatalogoSemiAcustic-Servlet">
+    <form action="CatalogoSemiAcusticControl">
         <li>
             <button id="CatalogoSemiAcusticBUTTON" >    <!--BOUNDARY OBJECT !-->
                 <img id="semi" src="Images/semi.png" width="150" height="330">
-                <a id="semiAc" href="CatalogoSemiAcustic-Servlet">SEMI ACOUSTIC</a>
+                <a id="semiAc" href="CatalogoSemiAcusticControl">SEMI ACOUSTIC</a>
             </button>
         </li>
     </form>
