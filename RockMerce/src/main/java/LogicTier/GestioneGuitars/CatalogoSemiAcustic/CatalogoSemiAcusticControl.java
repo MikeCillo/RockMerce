@@ -1,6 +1,6 @@
 package LogicTier.GestioneGuitars.CatalogoSemiAcustic;
 
-import LogicTier.GestioneGuitars.GuitarService;
+import LogicTier.Utils.GuitarService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
