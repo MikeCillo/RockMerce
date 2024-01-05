@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="RockMerce" target="1.8" />
+      <module name="RockMerce" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>
