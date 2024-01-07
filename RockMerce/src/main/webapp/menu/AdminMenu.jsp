@@ -34,7 +34,7 @@
 
     <!-- ORDERS -->
     <li id="orders">
-        <form action="Orders-Servlet" method="post">
+        <form action="OrdersControl" method="post">
             <button >
                 <i class="fa fa-shopping-basket" style="font-size:20px" ></i>
                 <span>ORDERS</span>
@@ -49,11 +49,10 @@
                 <i class="fa fa-customer" style="font-size:20px"></i>
             </button>
             <div class="dropdown-content">
-                <a href="exit-servlet">EXIT</a>
+                <a href="LogOut-Servlet">EXIT</a>
             </div>
         </div>
     </li>
-
 
 
 

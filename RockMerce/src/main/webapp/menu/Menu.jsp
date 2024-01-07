@@ -31,7 +31,7 @@
 
             <!-- SHOP BUTTON-->
     <li>
-        <form action="CatalogoCompleto-Servlet">
+        <form action="CatalogoCompletoControl">
             <button id="shop" class="btnR">
                 <i class="fas fa-guitar" style="font-size: 20px"></i>
                 <span>SHOP</span>
@@ -41,7 +41,7 @@
 
          <!-- CART BUTTON -->
     <li class="Right">
-        <form action="CartPage-Servlet" method="post">
+        <form action="CartPageControl" method="post">
             <button id="cart">                               <!-- BOUNDARY OBJECT -->
                 <i class="fa fa-shopping-cart" style="font-size:20px"></i>
                 <span>CART</span>
@@ -82,7 +82,7 @@
                 <i class="fa fa-customer" style="font-size:20px"></i>
             </button>
             <div class="dropdown-content">
-                <a href="Checkouts-Servlet">MY ORDERS</a>
+                <a href="CheckoutsControl">MY ORDERS</a>
                 <a id="LogOutBUTTON" href="LogOut-Servlet">EXIT</a>
             </div>
         </div>
