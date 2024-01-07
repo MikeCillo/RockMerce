@@ -1,4 +1,4 @@
-package LogicTier.Utils;
+package LogicTier.Utils.GuitarUtils;
 
 import DataTier.RockMerceDAO.Guitar.GuitarDAO;
 import LogicTier.Entità.Guitar;

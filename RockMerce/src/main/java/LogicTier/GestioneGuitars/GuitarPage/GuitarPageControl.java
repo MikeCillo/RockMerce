@@ -1,6 +1,6 @@
 package LogicTier.GestioneGuitars.GuitarPage;
 
-import LogicTier.Utils.GuitarService;
+import LogicTier.Utils.GuitarUtils.GuitarService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

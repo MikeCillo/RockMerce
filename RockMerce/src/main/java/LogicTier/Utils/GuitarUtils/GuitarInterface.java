@@ -1,4 +1,4 @@
-package LogicTier.Utils;
+package LogicTier.Utils.GuitarUtils;
 import LogicTier.Entità.Guitar;
 import java.util.ArrayList;
 

@@ -2,7 +2,7 @@ package LogicTier.GestioneAutenticazione.LogIn;
 
 import LogicTier.Entità.Admin;
 import LogicTier.Entità.Customer;
-import LogicTier.Utils.AutenticazioneService;
+import LogicTier.Utils.AutenticazioneUtils.AutenticazioneService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

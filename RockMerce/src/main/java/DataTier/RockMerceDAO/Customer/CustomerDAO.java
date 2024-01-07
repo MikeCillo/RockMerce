@@ -6,7 +6,6 @@ import DataTier.RockMerceDAO.CreditCard.CreditCardDAO;
 import LogicTier.Entità.Cart;
 import LogicTier.Entità.CreditCard;
 import LogicTier.Entità.Customer;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
