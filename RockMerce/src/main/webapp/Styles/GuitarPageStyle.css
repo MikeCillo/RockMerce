@@ -1,0 +1,144 @@
+
+#gImage{                                    /*GUITAR'S IMAGE */
+    margin-left: 10px;
+    width: 500px;
+    height: 500px;
+    transition: width 1.0s,height 1.0s;
+}
+
+#product{                                   /*GUITAR'S IMAGE DISPLAY*/
+    display: inline-block;
+    float: left;
+    margin-top: 100px;
+    background-color: whitesmoke;
+    width: 600px;
+    height: 550px;
+    padding: 20px;
+}
+
+
+#product:hover > #gImage{                        /*HOVER GUITAR'S IMAGE ZONE*/
+    width: 550px;
+    height: 550px;
+    transition: width 1.0s,height 1.0s;
+}
+
+
+#Details{
+    margin-top: 100px;/*GUITAR'S PROPERTIES*/
+    background-color:transparent;
+    font-family: Helvetica;
+    font-size: 28px;
+    color: black;
+    float: left;
+    display: inline-block;
+}
+
+
+
+#title{
+          /*TITLE PROPERTIES*/
+    font-family: Phosphate;
+    font-size: 30px;
+}
+
+
+
+
+
+
+#btnCart{                                /*ADD TO CART */
+    margin-top: 100px;
+    width: 200px;
+    border-radius: 30px;
+    height: 70px;
+    background-color: black;
+    border:none;
+    font-size: 24px;
+    color: white;
+    transition: color 0.5s,font-size 0.5s,border 0.5s;
+}
+
+#btnCart:hover{                          /*ADD TO CART HOVER */
+    border:2px solid #FFC12C;
+    color: #FFC12C;
+    font-size: 28px;
+    transition: color 0.5s,font-size 0.5s,border 0.5s;
+}
+
+
+
+#description{                        /*GUITAR'S DESCRIPTION*/
+    width: 50%;
+    height: 500px;
+    float: left;
+    margin-left: 3%;
+    background-color:transparent;
+    color: black;
+    text-align: left;
+    font-size: 26px;
+    padding: 20px;
+    font-family: Helvetica;
+}
+
+
+iframe{                          /*YOUTUBE GUITAR'S VIDEO */
+    margin-top: 30px;
+    width: 600px;
+    height: 300px;
+
+}
+
+
+ #Shop{
+     background: #1C889E;
+     color: white;
+ }
+
+
+#gPage{
+    list-style-type: none;
+}
+#gPage li{
+    margin-left: 2%;
+    float: left;
+}
+
+#quant{
+    width:70px ;
+    height: 50px;
+    font-size: 20px;
+    border: 2px solid black;
+    border-radius: 20%;
+}
+
+/*MEDIA QUERY */
+
+@media screen and (max-width:900px) {
+
+    #product{
+        width: 400px;
+        height: 400px;
+    }
+
+    #gImage{                                    /*GUITAR'S IMAGE */
+        margin-left: 30px;
+        width: 350px;
+        height: 350px;
+        transition: width 1.0s,height 1.0s;
+    }
+
+
+
+    #product:hover > #gImage{                        /*HOVER GUITAR'S IMAGE ZONE*/
+        width: 370px;
+        height: 370px;
+        transition: width 1.0s,height 1.0s;
+    }
+
+    #YTsrc{
+        width: 400px;
+        height: 200px;
+    }
+
+}
