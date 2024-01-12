@@ -2,6 +2,7 @@ package LogicTier.Utils.GuitarUtils;
 
 import DataTier.RockMerceDAO.Guitar.GuitarDAO;
 import LogicTier.Entità.Guitar;
+import LogicTier.Utils.SignUpUtils.SignUpService;
 
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
 public class GuitarService implements GuitarInterface {
 
 
-    private static final Logger logger = Logger.getLogger(GuitarService.class.getName());
+    private static final Logger logger = Logger.getLogger(SignUpService.class.getName());
     private Guitar guitar=new Guitar();
 
     GuitarDAO guitarDAO=new GuitarDAO();

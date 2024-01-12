@@ -1,0 +1,108 @@
+body{
+    background-image: url("../Images/lampwhite.jpg") ;
+    background-size: cover;
+}
+
+#LoginArea{
+    margin-left: 28%;
+    margin-top: 20%;
+}
+
+
+
+
+label{
+    display: inline-block;
+    width: 280px;
+    text-align: left;
+    color: black;
+    font-size: 32px;
+    font-family: "Helvetica";
+    font-weight: bold;
+    transition: color 0.8s, background-color 0.8s,font-size 0.5s;
+}
+
+input{
+    margin: 20px;
+    width: 300px;
+    height: 40px;
+    font-size: 22px;
+    font-family: "Times New Roman";
+    color: black;
+    padding: 15px;
+    background-color: transparent;
+    border: 2px black solid;
+    transition: color 0.8s, background-color 0.8s,font-size 0.5s,width 0.8s;
+}
+
+
+
+label:hover {
+    text-shadow: 2px 2px black;
+    color: #FFC12C;
+    transition: color 0.8s,background-color 0.8s,text-shadow 0.8s;
+}
+
+input:hover{
+    font-size: 24px;
+    width: 310px;
+    color: white;
+    background-color: black;
+    border-color: #FFC12C;
+    transition: color 0.8s, background-color 0.8s,font-size 0.5s,width 0.8s ;
+}
+
+input:focus{
+    font-size: 24px;
+    width: 310px;
+    color: white;
+    background-color: black;
+    border-color: #FFC12C;
+    transition: color 0.8s, font-size 0.5s,background-color 0.8s ;
+}
+
+
+
+
+#invia{
+    width: 150px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Helvetica;
+    background-color: black;
+    border:2px solid white;
+    transition: font-size 0.8s,width 0.8s,border 0.8s;
+}
+
+#invia:hover{
+    width: 180px;
+    font-size: 28px;
+    border: 2px solid #FFC12C;
+    color: #FFC12C;
+    transition: font-size 0.8s,width 0.8s,border 0.8s,color 0.8s;
+}
+
+
+#SignUp{
+    margin-left: 28%;
+    width: 150px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Helvetica;
+    background-color: black;
+    border:2px solid white;
+    transition: font-size 0.8s,width 0.8s,border 0.8s;
+}
+
+#SignUp:hover{
+    width: 180px;
+    font-size: 28px;
+    border: 2px solid #FFC12C;
+    color: #FFC12C;
+    transition: font-size 0.8s,width 0.8s,border 0.8s,color 0.8s;
+}
+

@@ -1,0 +1,191 @@
+body{                                                       /*BACKGROUND*/
+    background-image: url("../Images/rit.jpg") ;
+    background-size: cover;
+
+}
+
+
+#home{                                               /*HOMEPAGE LOGO*/
+    margin-top: 1%;
+    margin-right: 5%;
+    float: right;
+    border: none;
+    background-color: transparent;
+}
+
+
+#signUpUl{                                             /*UL DOT REMOVE*/
+    list-style-type: none;
+}
+
+
+
+#logo:hover {                                          /*HOMEPAGE LOGO HOVER*/
+    transform: rotateX(360deg);
+    transition: transform 1.5s ;
+}
+
+.Field{                                               /* ALL LI OF UL */
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+label{                                                     /* LABEL INSIDE LI */
+    height: 50px;
+    display: inline-block;
+    text-align: left;
+    width: 180px;
+    color: white;
+    font-size: 28px;
+    font-family: "Helvetica";
+    font-weight: bold;
+    transition: color 0.8s,background-color 0.8s;
+}
+
+
+label:hover {                                 /* HOVER LABEL INSIDE LI  */
+    color: #FFC12C;
+    transition: color 0.8s,background-color 0.8s;
+}
+
+
+input{                                       /* INPUT INSIDE LI */
+    height: 40px;
+    font-size: 24px;
+    font-family: "Times New Roman";
+    color: black;
+    padding: 15px;
+    background-color: transparent;
+    border: 2px white solid;
+    transition:width 1.0s, color 0.8s,background-color 0.8s;
+}
+
+
+input:hover{                                             /* HOVER INPUT INSIDE LI  */
+    color: white;
+    background-color: black;
+    border-color: #FFC12C;
+    transition: color 0.8s,background-color 0.8s,width 1.0s ;
+}
+
+input:focus{                                     /* CLICKED INPUT INSIDE LI  */
+    color: white;
+    background-color: black;
+    border-color: #FFC12C;
+    transition: color 0.8s,background-color 0.8s,width 1.0s ;
+}
+
+
+#invia{                                      /* SEND BUTTON LI  */
+    width: 150px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Helvetica;
+    background-color: black;
+    border:2px solid white;
+    transition: width 0.8s,border 0.8s;
+}
+
+#invia:hover{                            /* HOVER SEND BUTTON LI  */
+    width: 200px;
+    border: 2px solid #FFC12C;
+    color: #FFC12C;
+    transition: width 0.8s,border 0.8s,color 0.8s;
+}
+
+#LogInBUTTON{       /* SEND BUTTON LI  */
+    margin-left: 3%;
+    width: 300px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Helvetica;
+    background-color: black;
+    border:2px solid white;
+    transition: width 0.8s,border 0.8s;
+}
+
+#LogInBUTTON:hover{                            /* HOVER SEND BUTTON LI  */
+    width: 350px;
+    border: 2px solid #FFC12C;
+    color: #FFC12C;
+    transition: width 0.8s,border 0.8s,color 0.8s;
+}
+
+
+
+#pw{                                     /* PASSWORD SPECIFICS */
+    font-family: Helvetica;
+    visibility: hidden;
+    font-size: 28px;
+    text-shadow: -4px 0 #FFC12C;
+    color: black;
+}
+
+.err{                                   /* ERROR MESSAGES */
+    margin-left: 10px;
+    font-family: Helvetica;
+    font-size: 18px;
+    color: white;
+    text-shadow: -2px 0 black;
+
+}
+
+a:link{                              /* A */
+    color: #D10C0C;
+}
+
+a:visited{                               /* A ONCE VISISTED*/
+    color: #D10C0C;
+}
+
+
+
+
+
+/*MEDIA QUERY */
+
+@media screen and (max-width:1000px){
+
+
+
+    #signUpUl li{                       /* EACH LI GETS A ROW */
+        width: 100%;
+    }
+
+    #signUpUl #home{                      /* LI HOME */
+        display: block;
+        width: 100%;
+    }
+
+    #signUpUl label{
+        margin-top: 50px;
+        display: inline-block;
+        color: white;
+
+    }
+    #signUpUl input{             /* INPUT */
+        color: white;
+        background-color: black;
+        border:2px solid #FFC12C;
+        display: block;
+    }
+
+    #home img{                            /* LOGO POSITION */
+        margin-left: 5%;
+    }
+
+
+    #logo{                                   /* LI LOGO POSITION */
+        float: none;
+        margin-left: 34%;
+    }
+
+    #logo img{                               /* IMG SETTINGS */
+        width: 200px;
+        height: 200px;
+    }
+}
