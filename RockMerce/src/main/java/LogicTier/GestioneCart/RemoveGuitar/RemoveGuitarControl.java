@@ -24,13 +24,14 @@ public class RemoveGuitarControl extends HttpServlet {
         String address ="/PresentationTier/CartGUI/CartPageGUI/Cart.jsp";
 
         int id = Integer.parseInt(request.getParameter("idGuitar"));
+        int idg = Integer.parseInt(request.getParameter("idG"));
 
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("customer");
 
          if(customer !=null){
              CartService cartService =new CartService();
-             Cart cart= cartService.removeGuitarFromCart(customer,id);
+             Cart cart= cartService.removeGuitarFromCart(customer,idg);
 
              request.setAttribute("guitars", cart.getGuitars());
              request.setAttribute("cart", cart);

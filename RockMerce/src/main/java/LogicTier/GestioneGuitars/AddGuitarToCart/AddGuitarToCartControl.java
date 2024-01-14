@@ -29,6 +29,7 @@ public class AddGuitarToCartControl extends HttpServlet {
         int quantity= Integer.parseInt(request.getParameter("quant"));
 
         Guitar guitar=new Guitar();
+        guitar.setId(guitarDB.getId());
         guitar.setName(guitarDB.getName());
         guitar.setDisponibility(quantity);
         guitar.setPrice(quantity*guitarDB.getPrice());

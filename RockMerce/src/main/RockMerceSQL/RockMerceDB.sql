@@ -40,15 +40,13 @@ numGuitars integer not null
 
 
 create table CartContent(
-id int(5) primary key auto_increment,
+id int(5) ,
 cart int (5),
-name varchar(50) not null,
 quantity integer(5),
 price double  not null default 0.00,
-producer varchar (20) not null,
-category varchar (15) not null CHECK (category in ('classic','electric','semiAcoustic')),
-color varchar(20),
-Foreign key (cart) references Cart(id)
+Foreign key (cart) references Cart(id),
+Foreign Key (id) references Guitar(id),
+CONSTRAINT CartCon_Key PRIMARY KEY (id,cart)
 );
 
 
@@ -220,13 +218,10 @@ values(1,"0.00",0),
 (4,"300.00",1),
 (5,"0.00",0);
 
-insert into CartContent(id,cart,name,quantity,price,producer,category,color)
-values(1,3,"CAMARO VR 2-90 BLUE SPARKLE",1,280.00,"EKO","electric","blue"),
-(2,3,"LES PAUL 70S DELUXE",1,2799.00,"GIBSON","electric","gold"),
-(3,4,"CD-60SCE",1,300.00,"FENDER","semiAcoustic","black - natural");
-
-
-
+insert into CartContent(id,cart,quantity,price)
+values(5,3,1,280.00),
+      (3,3,1,2799.00),
+      (11,4,1,300.00);
 
 
 insert into Customer (username,email,name,surname,password,phone,country,city,address,cardId,cartId)

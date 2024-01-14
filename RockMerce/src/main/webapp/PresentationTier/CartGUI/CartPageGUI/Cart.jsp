@@ -122,6 +122,7 @@
 
         <form action="FreeCartControl" method="post">
             <input type="hidden" name="idGuitar" value="<%=pos%>">
+            <input type="hidden" name="idG" value="${guitar.id}">
             <button class="RemoveBtn">FREE CART</button>
         </form>
 
