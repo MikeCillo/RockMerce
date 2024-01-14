@@ -4,20 +4,20 @@ import DataTier.RockMerceDAO.Guitar.GuitarDAO;
 import LogicTier.Entità.Guitar;
 import LogicTier.Utils.SignUpUtils.SignUpService;
 
-
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GuitarService implements GuitarInterface {
+public class GuitarService implements LogicTier.GestioneGuitars.GuitarInterface {
+
 
 
     private static final Logger logger = Logger.getLogger(SignUpService.class.getName());
-    private Guitar guitar=new Guitar();
+    private Guitar guitar = new Guitar();
 
-    GuitarDAO guitarDAO=new GuitarDAO();
+    GuitarDAO guitarDAO = new GuitarDAO();
 
     public Guitar getGuitar() {
         return guitar;
@@ -29,6 +29,12 @@ public class GuitarService implements GuitarInterface {
 
     public void setGuitarDAO(GuitarDAO guitarDAO) {
         this.guitarDAO = guitarDAO;
+    }
+
+
+    @Override
+    public ArrayList<Guitar> adminRetrieveGuitars() {
+        return this.guitarDAO.admindoRetrieveGuitars();
     }
 
     @Override
@@ -52,220 +58,191 @@ public class GuitarService implements GuitarInterface {
     }
 
     @Override
-    public void updateGuitar(Guitar guitar) {
+    public void customGuitar(Guitar guitar) {
         this.guitarDAO.doUpdateGuitar(guitar);
     }
 
     @Override
-    public boolean UpdateGuitarValidation(Guitar guitar){
-        this.guitar=guitar;
+    public boolean customGuitarValidation(Guitar guitar) {
+        this.guitar = guitar;
+        if (guitar.getName().length() <= 0 || guitar.getName().length() > 35) {
+            logger.log(Level.SEVERE, "ERROR: GUITAR NAME");
+            return false;
+        } else {
+            String reg = "[a-zA-Z0-9òàùè\\s]{1,20}";
+            Pattern pattern = Pattern.compile(reg);
+            Matcher matcher = pattern.matcher(guitar.getProducer());
 
-        if(GuitarNameValidation(guitar.getName()) && GuitarPriceValidation(guitar.getPrice())
-                && GuitarProducerValidation(guitar.getProducer()) && GuitarCategoryValidation(guitar.getCategory())
-                && GuitarDisponibilityValidation(guitar.getDisponibility()) && GuitarSoundValidation(guitar.getSound())
-                && GuitarDescriptionValidation(guitar.getDescription()) && GuitarVisibilityValidation(guitar.getVisibility())
-                && GuitarColorValidation(guitar.getColor())){
-            updateGuitar(this.guitar);
-            return true;
+            if (!matcher.matches()) {
+                logger.log(Level.SEVERE, "ERROR: GUITAR PRODUCER ");
+                return false;
+            } else {
+
+                if (guitar.getPrice() < 50 || guitar.getPrice() > 10000) {
+                    logger.log(Level.SEVERE, "ERROR: GUITAR PRICE ");
+                    return false;
+                } else {
+                    if (guitar.getDescription().length() <= 0 || guitar.getDescription().length() > 2000) {
+                        logger.log(Level.SEVERE, "ERROR: GUITAR DESCRIPTION ");
+                        return false;
+                    } else {
+                        reg = "[a-zA-Z\\s]{2,20}";
+                        pattern = Pattern.compile(reg);
+                        matcher = pattern.matcher(guitar.getColor());
+
+                        if (!matcher.matches()) {
+                            logger.log(Level.SEVERE, "ERROR: GUITAR COLOR");
+                            return false;
+                        } else {
+                            reg = "[0-9]{1,5}";
+                            pattern = Pattern.compile(reg);
+                            matcher = pattern.matcher(String.valueOf(guitar.getDisponibility()));
+
+                            if (!matcher.matches() || guitar.getDisponibility() <= 0) {
+                                logger.log(Level.SEVERE, "ERROR: GUITAR DISPONIBILITY ");
+                                return false;
+                            } else {
+                                if (guitar.getSound().length() <= 24) {
+                                    logger.log(Level.SEVERE, "ERROR: URL INCORRECT");
+                                    return false;
+                                } else if (guitar.getSound().substring(0, 24).contains("https://www.youtube.com/")) {
+                                    this.guitar.setSound("https://www.youtube.com/embed/" + guitar.getSound().substring(guitar.getSound().lastIndexOf("/") + 1));
+
+                                } else {
+                                    if (guitar.getCategory() == null) {
+                                        logger.log(Level.SEVERE, "ERROR: CATEGORY ");
+                                        return false;
+                                    } else if (guitar.getCategory().compareTo("electric") != 0) {
+
+                                        logger.log(Level.SEVERE, "ERROR: CATEGORY ");
+                                        return false;
+                                    } else if (guitar.getCategory().compareTo("classic") != 0) {
+
+                                        logger.log(Level.SEVERE, "ERROR: CATEGORY ");
+                                        return false;
+                                    } else if (guitar.getCategory().compareTo("semiAcoustic") != 0) {
+
+                                        logger.log(Level.SEVERE, "ERROR: CATEGORY ");
+                                        return false;
+                                    } else {
+                                        if (guitar.getVisibility() == null) {
+                                            logger.log(Level.SEVERE, "ERROR: VISIBILITY");
+                                            return false;
+                                        } else if (!guitar.getVisibility().equals("yes")) {
+
+                                            logger.log(Level.SEVERE, "ERROR: VISIBILITY ");
+                                            return false;
+                                        } else if (!guitar.getVisibility().equals("no")) {
+
+                                            logger.log(Level.SEVERE, "ERROR: VISIBILITY ");
+                                            return false;
+                                        } else {
+                                            this.guitarDAO.doUpdateGuitar(this.guitar);
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        return false;
+        this.guitarDAO.doUpdateGuitar(this.guitar);
+        return true;
     }
 
     @Override
-    public void insertNewGuitar(Guitar guitar) {
+    public void addGuitar(Guitar guitar) {
         this.guitarDAO.doInsertNewGuitar(guitar);
     }
 
-
-    public boolean InsertGuitarValidation(Guitar guitar){
-        this.guitar=guitar;
-
-        if(GuitarNameValidation(guitar.getName()) && GuitarPriceValidation(guitar.getPrice())
-                && GuitarProducerValidation(guitar.getProducer()) && GuitarCategoryValidation(guitar.getCategory())
-                && GuitarDisponibilityValidation(guitar.getDisponibility()) && GuitarSoundValidation(guitar.getSound())
-                && GuitarImageValidation(guitar.getImage()) && GuitarDescriptionValidation(guitar.getDescription()) &&
-                GuitarVisibilityValidation(guitar.getVisibility()) && GuitarColorValidation(guitar.getColor())){
-            insertNewGuitar(this.guitar);
-            return true;
-        }
-        return false;
-    }
-
-
-
-
-    //GUITAR NAME VALIDATION
     @Override
-    public boolean GuitarNameValidation(String name) {
-        String reg = "[a-zA-Z\\s]{1,20}";
+    public boolean addGuitarValidation(Guitar guitar) {
+        this.guitar = guitar;
+        String reg = ".{1,35}";
         Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(name);
+        Matcher matcher = pattern.matcher(guitar.getName());
+        if (!matcher.matches()) {
+            logger.log(Level.SEVERE, "ERROR: GUITAR NAME");
+            return false;
+        }
+
+        reg = "[a-zA-Z0-9òàùèì\\s]{1,20}";
+        pattern = Pattern.compile(reg);
+        matcher = pattern.matcher(guitar.getProducer());
 
         if (!matcher.matches()) {
-            logger.log(Level.SEVERE, "ERROR: GUITAR NAME INCORRECT");
+            logger.log(Level.SEVERE, "ERROR: GUITAR PRODUCER ");
             return false;
-        } else {
-            return true;
         }
-    }
 
+        if (guitar.getPrice() < 50 || guitar.getPrice() > 10000) {
+            logger.log(Level.SEVERE, "ERROR: GUITAR PRICE ");
+            return false;
+        }
 
-    //GUITAR PRODUCER VALIDATION
-    @Override
-    public boolean GuitarProducerValidation(String producer) {
-        String reg = "[a-zA-Z0-9\\s]{1,20}";
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(producer);
+        if (guitar.getDescription().length() <= 0 || guitar.getDescription().length() > 2000) {
+            logger.log(Level.SEVERE, "ERROR: GUITAR DESCRIPTION ");
+            return false;
+        }
+
+        reg = "[a-zA-Z\\s]{2,20}";
+        pattern = Pattern.compile(reg);
+        matcher = pattern.matcher(guitar.getColor());
 
         if (!matcher.matches()) {
-            logger.log(Level.SEVERE, "ERROR: GUITAR PRODUCER INCORRECT");
+            logger.log(Level.SEVERE, "ERROR: GUITAR COLOR");
             return false;
-        } else {
-            return true;
         }
-    }
 
 
-    //GUITAR PRICE VALIDATION
-    @Override
-    public boolean GuitarPriceValidation(double price) {
-        String reg = "[0-9.]{1,20}";
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(String.valueOf(price));
-
-        if (!matcher.matches() || price <= 49.99) {
-            logger.log(Level.SEVERE, "ERROR: GUITAR PRICE INCORRECT");
+        if (guitar.getDisponibility() <= 0) {
+            logger.log(Level.SEVERE, "ERROR: GUITAR DISPONIBILITY ");
             return false;
-        } else {
-            return true;
         }
-    }
 
-
-    //GUITAR DESCRIPTION VALIDATION
-    @Override
-    public boolean GuitarDescriptionValidation(String description) {
-        String reg = "[a-zA-Z0-9.,\\s]{1,200}";
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(description);
-
-        if (!matcher.matches()) {
-            logger.log(Level.SEVERE, "ERROR: GUITAR DESCRIPTION INCORRECT");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-    //GUITAR COLOR VALIDATION
-    @Override
-    public boolean GuitarColorValidation(String color) {
-        String reg = "[a-zA-Z\\s]{1,20}";
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(color);
-
-        if (!matcher.matches()) {
-            logger.log(Level.SEVERE, "ERROR: GUITAR COLOR INCORRECT");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-    //GUITAR DISPONIBILITY VALIDATION
-    @Override
-    public boolean GuitarDisponibilityValidation(int disponibility) {
-        String reg = "[0-9]{1,20}";
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(String.valueOf(disponibility));
-
-        if (!matcher.matches() || disponibility <= 0) {
-            logger.log(Level.SEVERE, "ERROR: GUITAR DISPONIBILITY INCORRECT");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-
-    //GUITAR SOUND VALIDATION
-    @Override
-    public boolean GuitarSoundValidation(String sound) {
-        if (sound.length() <= 35) {
+        if (guitar.getSound().length() <= 24) {
             logger.log(Level.SEVERE, "ERROR: URL INCORRECT");
             return false;
-        } else if (sound.substring(0, 24).contains("https://www.youtube.com/")) {
-            String givenURL = sound;
-            this.guitar.setSound("https://www.youtube.com/embed/" + givenURL.substring(givenURL.lastIndexOf("/") + 1));
-            return true;
         }
-        logger.log(Level.SEVERE, "ERROR: URL INCORRECT");
-        return false;
-    }
 
+        reg = "(jpeg|png)";
+        pattern = Pattern.compile(reg);
+        matcher = pattern.matcher(guitar.getImage());
 
-
-    //GUITAR IMAGE VALIDATION
-    @Override
-    public boolean GuitarImageValidation(String image) {
-       if(image.contains(".png") || image.contains(".jpeg")){
-           return true;
-       }
-       else {
-           logger.log(Level.SEVERE, "ERROR: IMAGE FORMAT INCORRECT");
-           return false;
-       }
-    }
-
-    //GUITAR CATEGORY VALIDATION
-    @Override
-    public boolean GuitarCategoryValidation(String category) {
-        if (category == null) {
-            logger.log(Level.SEVERE, "ERROR: CATEGORY INCORRECT");
+        if (!guitar.getImage().contains("png") && !guitar.getImage().contains("jpeg")) {
+            logger.log(Level.SEVERE, "ERROR: IMAGE FORMAT ");
             return false;
-        } else if (category.compareTo("electric") == 0) {
-            this.guitar.setCategory("electric");
-            return true;
-        } else if (category.compareTo("classic") == 0) {
-            this.guitar.setCategory("classic");
-            return true;
-        } else if (category.compareTo("semiAcoustic") == 0) {
-            this.guitar.setCategory("semiAcoustic");
-            return true;
         }
-        return false;
-    }
 
-
-    //GUITAR VISIBILITY VALIDATION
-
-    @Override
-    public boolean GuitarVisibilityValidation(String visibility) {
-        if (visibility == null) {
-            logger.log(Level.SEVERE, "ERROR: VISIBILITY INCORRECT");
+        if (guitar.getCategory().length() == 0) {
+            logger.log(Level.SEVERE, "ERROR: CATEGORY ");
             return false;
-        } else if (visibility.equals("yes")) {
-            this.guitar.setVisibility("yes");
-            return true;
-        } else if (visibility.equals("no")) {
-            this.guitar.setVisibility("no");
-            return true;
+        } else if (guitar.getCategory().compareTo("electric") == 1) {
+
+            logger.log(Level.SEVERE, "ERROR: CATEGORY ");
+            return false;
+        } else if (guitar.getCategory().compareTo("classic") == 1) {
+
+            logger.log(Level.SEVERE, "ERROR: CATEGORY ");
+            return false;
+        } else if (guitar.getCategory().compareTo("semiAcoustic") == 1) {
+
+            logger.log(Level.SEVERE, "ERROR: CATEGORY ");
+            return false;
         }
-        return false;
+
+        String yes="yes";
+        if (guitar.getVisibility().length() == 0 ) {
+            logger.log(Level.SEVERE, "ERROR: VISIBILITY");
+            return false;
+        }
+
+        this.guitarDAO.doInsertNewGuitar(this.guitar);
+        return true;
     }
-
-
 }
-
-
-
-
-
-
-
-
 
 
 
