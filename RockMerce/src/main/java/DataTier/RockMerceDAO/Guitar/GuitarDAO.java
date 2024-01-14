@@ -261,7 +261,7 @@ public class GuitarDAO {
     }
 
 
-    public ArrayList<Guitar> AdmdoRetrieveGuitars() {
+    public ArrayList<Guitar> admindoRetrieveGuitars() {
         try (Connection con = DbConnection.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT * FROM Guitar  ");
