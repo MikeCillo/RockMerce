@@ -105,6 +105,7 @@
             <td id="btnRemove">
                 <form action="RemoveGuitarControl" method="post">
                     <input type="hidden" name="idGuitar" value="<%=pos%>">
+                    <input type="hidden" name="idG" value="${guitar.id}">
                     <button class="RemoveBtn">REMOVE GUITAR</button>
                  </form>
             </td>

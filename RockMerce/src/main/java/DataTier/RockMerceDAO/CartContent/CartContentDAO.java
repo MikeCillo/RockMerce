@@ -1,31 +1,46 @@
 package DataTier.RockMerceDAO.CartContent;
-
-
-import DataTier.DBCONNECTION.DbConnection;
-import DataTier.RockMerceDAO.Cart.CartDAO;
-import DataTier.RockMerceDAO.Guitar.GuitarDAO;
 import LogicTier.Entità.Cart;
+import DataTier.RockMerceDAO.Cart.CartDAO;
+import DataTier.DBCONNECTION.DbConnection;
 import LogicTier.Entità.Guitar;
-
+import DataTier.RockMerceDAO.Guitar.GuitarDAO;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CartContentDAO {
-
     public void insertIntoCartContent(int cartId, Guitar guitar) {
         try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO CartContent (cart,name,quantity,price,producer,category,color) VALUES(?,?,?,?,?,?,?)",
-                            Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT * FROM CartContent WHERE cart=? and id=?");
 
+            ps.setInt(1, cartId);
+            ps.setInt(2,guitar.getId());
 
-            ps.setInt(1,cartId);
-            ps.setString(2, guitar.getName());
-            ps.setInt(3, guitar.getDisponibility());
-            ps.setDouble(4, guitar.getPrice());
-            ps.setString(5, guitar.getProducer());
-            ps.setString(6, guitar.getCategory());
-            ps.setString(7,guitar.getColor());
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                guitar.setDisponibility(guitar.getDisponibility()+rs.getInt(3));
+                guitar.setPrice(guitar.getPrice()+rs.getInt(4));
+
+                ps = con.prepareStatement ("update CartContent set price=?,quantity=? where id=? and cart=?");
+                guitar.setDisponibility(guitar.getDisponibility());
+                ps.setDouble(1, guitar.getPrice());
+                ps.setInt(2,guitar.getDisponibility());
+                ps.setInt(3,guitar.getId());
+                ps.setInt(4,cartId);
+            }
+
+            else {
+                ps = con.prepareStatement(
+                        "INSERT INTO CartContent(id,cart,quantity,price) VALUES(?,?,?,?)",
+                        Statement.RETURN_GENERATED_KEYS);
+
+                ps.setInt(1,guitar.getId());
+                ps.setInt(2,cartId);
+                ps.setInt(3, guitar.getDisponibility());
+                ps.setDouble(4, guitar.getPrice());
+            }
+
 
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("THE GUITAR CANNOT BE ADDED TO CART");
@@ -34,34 +49,31 @@ public class CartContentDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 
 
 
     public ArrayList<Guitar> getCartContent(int cartId) {
+
+
         try (Connection con = DbConnection.getConnection()) {
             PreparedStatement ps =
-                    con.prepareStatement("SELECT id,name,quantity,price,producer,category,color FROM CartContent WHERE cart=?");
+                    con.prepareStatement("SELECT * FROM CartContent WHERE cart=?");
 
             ps.setInt(1, cartId);
 
             ResultSet rs = ps.executeQuery();
 
             ArrayList<Guitar> guitars= new ArrayList<>();
-            GuitarDAO guitarDAO=new GuitarDAO();          //db guitar's methods
+            GuitarDAO guitarDAO=new GuitarDAO();
             CartDAO cartDAO=new CartDAO();
             Cart cart=cartDAO.getCartFromDB(cartId);
             while (rs.next()) {
-                Guitar guitar=new Guitar();
-                guitar.setId(rs.getInt(1));
-                guitar.setName(rs.getString(2));
-                guitar.setDisponibility(rs.getInt(3));
+                Guitar guitar=guitarDAO.doRetrieveGuitarById(rs.getInt(1));
                 guitar.setPrice(rs.getDouble(4));
-                guitar.setProducer(rs.getString(5));
-                guitar.setCategory(rs.getString(6));
-                guitar.setColor(rs.getString(7));
+                guitar.setDisponibility(rs.getInt(3));
+
                 if(guitarDAO.checkGuitar(guitar)) {
                     guitars.add(guitar);
                 }
@@ -104,7 +116,7 @@ public class CartContentDAO {
 
 
     public void removeGuitarsFromCartContent(ArrayList<Guitar> guitars,int cartId) {
-       for(Guitar guitar:guitars)
+        for(Guitar guitar:guitars)
             try (Connection con = DbConnection.getConnection()) {
 
                 PreparedStatement ps = con.prepareStatement(
@@ -122,6 +134,10 @@ public class CartContentDAO {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
     }
+}
+
+
+
+
 
