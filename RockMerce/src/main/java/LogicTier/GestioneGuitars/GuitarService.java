@@ -1,8 +1,8 @@
-package LogicTier.Utils.GuitarUtils;
+package LogicTier.GestioneGuitars;
 
 import DataTier.RockMerceDAO.Guitar.GuitarDAO;
 import LogicTier.Entità.Guitar;
-import LogicTier.Utils.SignUpUtils.SignUpService;
+import LogicTier.GestioneSignUp.SignUpService;
 
 import java.util.ArrayList;
 import java.util.logging.Level;

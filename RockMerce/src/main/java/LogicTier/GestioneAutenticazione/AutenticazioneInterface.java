@@ -1,4 +1,4 @@
-package LogicTier.Utils.AutenticazioneUtils;
+package LogicTier.GestioneAutenticazione;
 
 import LogicTier.Entità.Admin;
 import LogicTier.Entità.Customer;

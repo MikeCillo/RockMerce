@@ -2,7 +2,6 @@ package LogicTier.GestioneSignUp;
 
 import LogicTier.Entità.CreditCard;
 import LogicTier.Entità.Customer;
-import LogicTier.Utils.SignUpUtils.SignUpService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

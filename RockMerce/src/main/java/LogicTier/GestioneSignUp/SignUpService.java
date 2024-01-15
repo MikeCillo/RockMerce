@@ -1,4 +1,4 @@
-package LogicTier.Utils.SignUpUtils;
+package LogicTier.GestioneSignUp;
 
 import DataTier.RockMerceDAO.Cart.CartDAO;
 import DataTier.RockMerceDAO.CreditCard.CreditCardDAO;
@@ -6,7 +6,8 @@ import DataTier.RockMerceDAO.Customer.CustomerDAO;
 import LogicTier.Entità.Cart;
 import LogicTier.Entità.CreditCard;
 import LogicTier.Entità.Customer;
-import LogicTier.Utils.AutenticazioneUtils.AutenticazioneService;
+import LogicTier.GestioneAutenticazione.AutenticazioneService;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
