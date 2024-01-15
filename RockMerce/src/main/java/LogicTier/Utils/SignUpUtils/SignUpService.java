@@ -53,8 +53,8 @@ public class SignUpService implements SignUpInterface {
        && CustomerCityValidation(customer.getCity()) && CustomerAddressValidation(customer.getAddress())
        && CustomerCountryValidation(customer.getCountry()) && CustomerPhoneValidation(customer.getPhone())
        && CustomerPasswordValidation(customer.getPassword()) && CreditCardOwnerValidation(creditCard.getOwner())
-       && CreditCardNumberValidation(creditCard.getNumber()) && CreditCardCvvValidation(creditCard.getCvv())
-       && CreditCardExpireDateValidation(creditCard.getDate())){
+       && CreditCardNumberValidation(creditCard.getCardNumber()) && CreditCardCvvValidation(creditCard.getCvv())
+       && CreditCardExpireDateValidation(creditCard.getExpireDate())){
            return true;
        }
         return false;

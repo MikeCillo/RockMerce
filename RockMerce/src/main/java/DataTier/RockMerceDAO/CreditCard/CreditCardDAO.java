@@ -12,9 +12,9 @@ public class CreditCardDAO {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO CreditCard (cardNumber, owner, expireDate, cvv) VALUES(?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, card.getNumber());
+            ps.setString(1, card.getCardNumber());
             ps.setString(2, card.getOwner());
-            ps.setString(3, card.getDate());
+            ps.setString(3, card.getExpireDate());
             ps.setInt(4, card.getCvv());
 
             if (ps.executeUpdate() != 1) {
@@ -42,9 +42,9 @@ public class CreditCardDAO {
             if (rs.next()) {
                 CreditCard card=new CreditCard();
                 card.setId(Integer.parseInt(rs.getString(1)));
-                card.setNumber(rs.getString(2));
+                card.setCardNumber(rs.getString(2));
                 card.setOwner(rs.getString(3));
-                card.setDate(rs.getString(4));
+                card.setExpireDate(rs.getString(4));
                 card.setCvv(Integer.parseInt(rs.getString(5)));
                 return card;
             }

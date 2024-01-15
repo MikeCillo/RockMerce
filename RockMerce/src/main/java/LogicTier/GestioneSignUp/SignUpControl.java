@@ -33,9 +33,9 @@ public class SignUpControl extends HttpServlet {
         customer.setAddress(request.getParameter("address"));
 
         CreditCard creditCard=new CreditCard();
-        creditCard.setNumber(request.getParameter("card"));
+        creditCard.setCardNumber(request.getParameter("card"));
         creditCard.setOwner(request.getParameter("owner"));
-        creditCard.setDate(request.getParameter("expMonth")+"/"+request.getParameter("expYear"));
+        creditCard.setExpireDate(request.getParameter("expMonth")+"/"+request.getParameter("expYear"));
         creditCard.setCvv(Integer.parseInt(request.getParameter("cvv")));
 
 
