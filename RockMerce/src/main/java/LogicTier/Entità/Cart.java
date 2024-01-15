@@ -21,7 +21,17 @@ public class Cart {
         this.numGuitars+=guitar.getDisponibility();
     }
 
-
+    public Guitar removeGuitarUser(int pos){
+        if(pos>=0) {
+            Guitar guitar= this.guitars.remove(pos);
+            this.tempTotal = tempTotal - guitar.getPrice();
+            this.numGuitars -= guitar.getDisponibility();
+            return guitar;
+        }
+        else {
+            return null;
+        }
+    }
 
     public Guitar removeGuitar(int pos){
         if(pos>=0) {

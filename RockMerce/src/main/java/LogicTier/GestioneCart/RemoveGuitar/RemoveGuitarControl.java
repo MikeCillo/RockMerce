@@ -40,7 +40,7 @@ public class RemoveGuitarControl extends HttpServlet {
             Cart cart= (Cart) session.getAttribute("cart");
 
                 if(cart.getNumGuitars()>=1){
-                    cart.removeGuitar(id);
+                    cart.removeGuitarUser(id);
                     request.setAttribute("guitars",cart.getGuitars());
                     request.setAttribute("cart",cart);
                 }
