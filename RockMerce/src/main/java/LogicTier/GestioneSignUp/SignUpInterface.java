@@ -1,4 +1,4 @@
-package LogicTier.Utils.SignUpUtils;
+package LogicTier.GestioneSignUp;
 
 import LogicTier.Entità.CreditCard;
 import LogicTier.Entità.Customer;

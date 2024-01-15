@@ -1,4 +1,4 @@
-package LogicTier.Utils.AutenticazioneUtils;
+package LogicTier.GestioneAutenticazione;
 
 import DataTier.RockMerceDAO.Admin.AdminDAO;
 import DataTier.RockMerceDAO.Customer.CustomerDAO;
