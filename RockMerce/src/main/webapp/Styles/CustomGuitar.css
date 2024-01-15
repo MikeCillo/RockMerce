@@ -1,0 +1,128 @@
+
+#customProd{                    /*DIV THAT CONTAINS UL WITH ALL GUITAR FIELDS */
+    float: left;
+    width: 50%;
+}
+
+
+.BoatShip{                          /* POSTIONING GUITAR'S CARD */
+    float: right;
+    margin-right: 20%;
+}
+
+
+
+
+.errorMessage{                              /* ERROR MESSAGES */
+    text-shadow: -4px 0 #FFC12C;
+    color: black;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+
+#customGuitarUL{                                             /*UL DOT REMOVE*/
+    list-style-type: none;
+    float: left;
+}
+
+
+.Field{                                               /* ALL LI OF UL */
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 100px;
+}
+
+label{                                                     /* LABEL INSIDE LI */
+    height: 50px;
+    display: inline-block;
+    text-align: left;
+    width: 200px;
+    color: black;
+    font-size: 24px;
+    font-family: "Helvetica";
+    font-weight: bold;
+    transition: color 0.8s,background-color 0.8s;
+}
+
+
+label:hover {                                 /* HOVER LABEL INSIDE LI  */
+    color: #FFC12C;
+    transition: color 0.8s,background-color 0.8s;
+}
+
+
+input{                                       /* INPUT INSIDE LI */
+    height: 60px;
+    font-size: 16px;
+    width: 400px;
+    font-family: "Times New Roman";
+    color: white;
+    padding: 15px;
+    background-color: black;
+    border: 2px #FFC12C solid;
+    transition:width 1.0s, color 0.8s,background-color 0.8s;
+}
+
+
+
+
+#invia{                                      /* SEND BUTTON LI  */
+    width: 150px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Helvetica;
+    background-color: black;
+    border:2px solid white;
+    transition: width 0.8s,border 0.8s;
+}
+
+#invia:hover{                            /* HOVER SEND BUTTON LI  */
+    width: 180px;
+    border: 2px solid #FFC12C;
+    color: #FFC12C;
+    transition: width 0.8s,border 0.8s,color 0.8s;
+}
+
+
+
+.err{                                   /* ERROR MESSAGES */
+    margin-left: 10px;
+    font-family: Helvetica;
+    font-size: 14px;
+    color: black;
+
+}
+
+
+select{
+    width: 200px;
+    color: black;
+    border: 2px solid black;
+    height: 50px;
+    font-size: 20px;
+}
+
+
+
+/*MEDIA QUERY */
+
+@media screen and (max-width:850px){
+
+
+    #customGuitarUL li{                       /* EACH LI GETS A ROW */
+        width: 100%;
+    }
+
+    #customGuitarUL #home{                      /* LI HOME */
+        display: block;
+        width: 100%;
+    }
+
+    #customGuitarUL input{                      /* INPUT */
+        display: block;
+    }
+}
