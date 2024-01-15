@@ -62,11 +62,11 @@ public class CheckoutDAO {
             CheckoutContentDAO checkoutContentDAO=new CheckoutContentDAO();
             while (rs.next()) {
                 Checkout checkout=new Checkout();
-                checkout.setIdCheckout(rs.getInt(1));
+                checkout.setId(rs.getInt(1));
                 checkout.setTotalPrice(rs.getDouble(2));
                 checkout.setSendDate(rs.getString(3));
                 checkout.setOrderDate(rs.getString(4));
-                checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getIdCheckout()));
+                checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getId()));
                 checkouts.add(checkout);
             }
             return checkouts;
@@ -89,13 +89,13 @@ public class CheckoutDAO {
             CustomerDAO customerDAO =new CustomerDAO();
             while (rs.next()) {
                 Checkout checkout=new Checkout();
-                checkout.setIdCheckout(rs.getInt(1));
+                checkout.setId(rs.getInt(1));
                 checkout.setTotalPrice(rs.getDouble(2));
                 checkout.setSendDate(rs.getString(3));
                 checkout.setOrderDate(rs.getString(4));
                 checkout.setCartId(rs.getInt(5));
                 checkout.setCustomer(customerDAO.getCustomerByCart(checkout.getCartId()));
-                checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getIdCheckout()));
+                checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getId()));
                 checkouts.add(checkout);
             }
             return checkouts;

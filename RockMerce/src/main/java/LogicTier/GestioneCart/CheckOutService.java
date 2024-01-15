@@ -40,7 +40,7 @@ public class CheckOutService implements CheckOutInterface{
             int idCheckout = checkoutDAO.newCheckout(customer.getCart().getId(), checkout.getSendDate(), checkout.getOrderDate());
 
 
-            checkout.setIdCheckout(idCheckout);
+            checkout.setId(idCheckout);
 
             GuitarDAO guitarDAO = new GuitarDAO();
             CheckoutContentDAO checkoutContentDAO = new CheckoutContentDAO();
@@ -67,7 +67,7 @@ public class CheckOutService implements CheckOutInterface{
 
             //SET CHECKOUT FINAL PRICE
             checkout.setTotalPrice(cart.getTempTotal());
-            checkoutDAO.updateCheckout(checkout.getTotalPrice(), checkout.getIdCheckout());
+            checkoutDAO.updateCheckout(checkout.getTotalPrice(), checkout.getId());
 
 
             // FREE CART

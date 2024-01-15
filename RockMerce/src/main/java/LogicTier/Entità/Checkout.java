@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Checkout {
-    private int idCheckout;
+    private int id;
 
     private double totalPrice=0.00;
 
@@ -21,7 +21,7 @@ public class Checkout {
 
     private Customer customer;
 
-    ArrayList<Guitar> guitars=new ArrayList<>();
+    private ArrayList<Guitar> guitars=new ArrayList<>();
 
 
     public int getCartId() {
@@ -65,12 +65,12 @@ public class Checkout {
     }
 
 
-    public int getIdCheckout() {
-        return idCheckout;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCheckout(int idCheckout) {
-        this.idCheckout = idCheckout;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getTotalPrice() {
