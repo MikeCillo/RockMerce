@@ -92,13 +92,13 @@ public class CheckOutService implements CheckOutInterface{
 
 
     @Override
-    public ArrayList<Checkout> AdminOrders() {
+    public ArrayList<Checkout> adminOrders() {
         CheckoutDAO checkoutDAO=new CheckoutDAO();
         return  checkoutDAO.retrieveOrders();
     }
 
     @Override
-    public double AdminEarnings(){
+    public double adminEarnings(){
         CheckoutDAO checkoutDAO=new CheckoutDAO();
         return  checkoutDAO.retrieveEarnings();
     }
