@@ -39,9 +39,9 @@ public class SignUpControl extends HttpServlet {
 
 
 
-        if(signUpService.SignUpValidation(customer,creditCard)){
+        if(signUpService.signUpValidation(customer,creditCard)){
             HttpSession session=request.getSession(true);
-            customer= signUpService.SignUp(customer,creditCard);
+            customer= signUpService.signUp(customer,creditCard);
             session.setAttribute("customer", customer);
             address="/PresentationTier/AutenticazioneGUI/LogInGUI/LogIn.jsp";
 
