@@ -96,7 +96,7 @@
 
     <li class="Field">
         <label for="card">Card number:</label>
-        <input type="text" id="card" name="card"  placeholder="16 DIGITS" value="${card.number}" onchange="valCardNumber()" required>   <!--pattern="[0-9]{16}">!-->
+        <input type="text" id="card" name="card"  placeholder="16 DIGITS" value="${card.cardNumber}" onchange="valCardNumber()" required>   <!--pattern="[0-9]{16}">!-->
         <span class="err" id="errCardNum"></span>
     </li>
 

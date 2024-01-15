@@ -3,9 +3,9 @@ package LogicTier.Entità;
 public class CreditCard {
 
     private int id;
-    private String number;
+    private String cardNumber;
     private String owner;
-    private String date;
+    private String expireDate;
     private int cvv;
 
     public int getId() {
@@ -16,20 +16,20 @@ public class CreditCard {
         this.id = id;
     }
 
-    public String getDate() {
-        return date;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public String getNumber() {
-        return number;
+    public String getExpireDate() {
+        return expireDate;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setExpireDate(String expireDate) {
+        this.expireDate = expireDate;
     }
 
     public String getOwner() {
