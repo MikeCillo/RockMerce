@@ -40,12 +40,12 @@ public class CartPageControl extends HttpServlet {
             Cart guestCart= (Cart) session.getAttribute("cart");
 
 
-            if(guestCart!=null){                                    //GUEST WITH A CART
+            if(guestCart!=null){                                    // WITH A CART
                 request.setAttribute("guitars",guestCart.getGuitars());
             }
 
 
-            else {                                              //GUEST WITHOUT A CART
+            else {                                              // WITHOUT A CART
                 Cart cart=new Cart();
                 session.setAttribute("cart",cart);
                 request.setAttribute("guitars",cart.getGuitars());

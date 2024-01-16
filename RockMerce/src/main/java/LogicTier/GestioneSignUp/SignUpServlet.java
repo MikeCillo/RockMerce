@@ -18,9 +18,6 @@ import java.io.IOException;
 public class SignUpServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        HttpSession session=request.getSession(true);
-        Customer customer=new Customer();
-        session.setAttribute("customer",customer);
 
         String address ="/PresentationTier/SignUpGUI/SignUp.jsp";
         RequestDispatcher dispatcher =
