@@ -80,7 +80,6 @@ public class SignUpTest extends Mockito {
         customer.setName("Mario");
         customer.setSurname("Rossi");
         customer.setUsername("qwertyuiohdgfbnmvkiyd");
-        customer.setEmail("vivaldi@gmail.com");
         customer.setEmail("prossi@gmail.com");
         customer.setPassword("ItaliaBrasile3.2");
         customer.setPhone("2345678923");
@@ -140,7 +139,7 @@ public class SignUpTest extends Mockito {
         customer.setName("Mario");
         customer.setSurname("Rossi");
         customer.setUsername("Pablito09");
-        customer.setEmail("vivaldi@gmail.com");
+        customer.setEmail("prossi@gmail.com");
         customer.setPassword("otaliabrasile3.2");
         customer.setPhone("2345678923");
         customer.setCity("Torino");
@@ -369,7 +368,7 @@ public class SignUpTest extends Mockito {
         customer.setAddress("Via Roma 10");
         creditCard.setCardNumber("1234567800001234");
         creditCard.setOwner("Piero Rossi");
-        creditCard.setExpireDate("");
+        creditCard.setExpireDate(null);
         creditCard.setCvv(231);
 
 
