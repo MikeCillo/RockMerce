@@ -50,7 +50,7 @@ public class SignUpService implements SignUpInterface {
     @Override
     public boolean signUpValidation(Customer customer, CreditCard creditCard) {
 
-        String reg = "[a-zA-Z]{1,20}";
+        String reg = "[a-zA-Z\\s]{1,20}";
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(customer.getName());
 
@@ -59,7 +59,7 @@ public class SignUpService implements SignUpInterface {
             return false;
         }
 
-        reg = "[a-zA-Z]{1,20}";
+        reg = "[a-zA-Z\\s]{1,20}";
         pattern = Pattern.compile(reg);
         matcher = pattern.matcher(customer.getSurname());
         if (!matcher.matches()) {
@@ -76,7 +76,7 @@ public class SignUpService implements SignUpInterface {
         }
 
 
-        String emailReg = "^([A-Za-z0-9_\\-\\.])+([@A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
+        String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
         pattern = Pattern.compile(emailReg);
         matcher = pattern.matcher(customer.getEmail());
         if (!matcher.matches() || !this.autenticazioneService.CheckEmail(customer.getEmail())) {
@@ -94,7 +94,7 @@ public class SignUpService implements SignUpInterface {
         }
 
 
-        reg = "[a-zA-Z]{1,20}";
+        reg = "[a-zA-Z\\s]{1,20}";
         pattern = Pattern.compile(reg);
         matcher = pattern.matcher(customer.getCity());
 
@@ -104,7 +104,7 @@ public class SignUpService implements SignUpInterface {
         }
 
 
-        reg = "[a-zA-Z]{1,20}";
+        reg = "[a-zA-Z\\s]{1,20}";
         pattern = Pattern.compile(reg);
         matcher = pattern.matcher(customer.getCountry());
 
@@ -113,11 +113,11 @@ public class SignUpService implements SignUpInterface {
             return false;
         }
 
-        reg = "[A-Za-z0-9'.,]{1,30}";
+        reg = "[A-Za-z0-9'.,\\-\\s]{1,30}";
         pattern = Pattern.compile(reg);
         matcher = pattern.matcher(customer.getAddress());
 
-        if (!matcher.matches()) {
+        if (customer.getAddress().length()<=0) {
             logger.log(Level.SEVERE, "ERROR: ADDRESS");
             return false;
         }
@@ -141,7 +141,7 @@ public class SignUpService implements SignUpInterface {
         }
 
 
-        reg = "[a-zA-Z]{1,30}";
+        reg = "[a-zA-Z\\s]{1,30}";
         pattern = Pattern.compile(reg);
         matcher = pattern.matcher(creditCard.getOwner());
 
