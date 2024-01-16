@@ -290,7 +290,7 @@ public class    GuitarDAO {
         }
     }
 
-    public void doInsertNewGuitar(Guitar guitar){
+    public boolean doInsertNewGuitar(Guitar guitar){
 
         try (Connection con = DbConnection.getConnection()) {
             PreparedStatement ps =
@@ -311,6 +311,7 @@ public class    GuitarDAO {
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("UPDATE FAILED");
             }
+            return true;
         }
 
         catch (SQLException e) {

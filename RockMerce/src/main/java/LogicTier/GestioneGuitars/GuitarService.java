@@ -3,7 +3,6 @@ package LogicTier.GestioneGuitars;
 import  DataTier.RockMerceDAO.Guitar.GuitarDAO;
 import LogicTier.Entità.Guitar;
 import LogicTier.GestioneSignUp.SignUpService;
-
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,8 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GuitarService implements LogicTier.GestioneGuitars.GuitarInterface {
-
-
 
     private static final Logger logger = Logger.getLogger(SignUpService.class.getName());
     private Guitar guitar = new Guitar();
@@ -156,6 +153,7 @@ public class GuitarService implements LogicTier.GestioneGuitars.GuitarInterface 
     public void addGuitar(Guitar guitar) {
         this.guitarDAO.doInsertNewGuitar(guitar);
     }
+
 
     @Override
     public boolean addGuitarValidation(Guitar guitar) {
