@@ -76,7 +76,7 @@ public class SignUpService implements SignUpInterface {
         }
 
 
-        String emailReg = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
+        String emailReg = "^([A-Za-z0-9_\\-\\.])+([@A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
         pattern = Pattern.compile(emailReg);
         matcher = pattern.matcher(customer.getEmail());
         if (!matcher.matches() || !this.autenticazioneService.CheckEmail(customer.getEmail())) {
@@ -113,7 +113,7 @@ public class SignUpService implements SignUpInterface {
             return false;
         }
 
-        reg = "[A-Za-z0-9'.,\\-\\s]{1,30}";
+        reg = "[A-Za-z0-9'.,]{1,30}";
         pattern = Pattern.compile(reg);
         matcher = pattern.matcher(customer.getAddress());
 
@@ -141,7 +141,7 @@ public class SignUpService implements SignUpInterface {
         }
 
 
-        reg = "[a-zA-Z\\s]{1,30}";
+        reg = "[a-zA-Z]{1,30}";
         pattern = Pattern.compile(reg);
         matcher = pattern.matcher(creditCard.getOwner());
 
