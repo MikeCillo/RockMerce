@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-public class GuitarDAO {
+public class    GuitarDAO {
 
     public ArrayList<Guitar> doRetrieveGuitars() {
         try (Connection con = DbConnection.getConnection()) {
