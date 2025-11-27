@@ -13,7 +13,7 @@ public class DbConnection {
 			PoolProperties p = new PoolProperties();
 			p.setUrl("jdbc:mysql://localhost:3306/RockMerceDB?serverTimezone=" + TimeZone.getDefault().getID());
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
-			p.setUsername("root");
+			p.setUsername("root");  //username
 			p.setPassword("Gionny1999@"); //password
 			p.setMaxActive(100);
 			p.setInitialSize(10);
