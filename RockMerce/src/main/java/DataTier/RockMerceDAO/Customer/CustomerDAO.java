@@ -77,6 +77,7 @@ public class CustomerDAO {
 
 
 
+
     public Customer doCheckLogin(String emUs, String password) {
         try (Connection con = DbConnection.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -120,6 +121,7 @@ public class CustomerDAO {
 
 
 
+
     public Customer getCustomerByCart(int idCart) {
         try (Connection con = DbConnection.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -158,4 +160,3 @@ public class CustomerDAO {
     }
 
 }
-
