@@ -14,7 +14,7 @@ public class DbConnection {
 			p.setUrl("jdbc:mysql://localhost:3306/RockMerceDB?serverTimezone=" + TimeZone.getDefault().getID());
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			p.setUsername("root");  //username
-			p.setPassword("Gionny1999@"); //password
+			p.setPassword("Salvatore2001"); //password michelebene testing
 			p.setMaxActive(100);
 			p.setInitialSize(10);
 			p.setMinIdle(10);
