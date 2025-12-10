@@ -23,7 +23,7 @@
 <li class="Field">
     <form action="BackHomepage-servlet">                                    <!--LOGO ONCLICK BACK HOMEPAGE-->
         <button id="home">
-            <img id="logo" src="Images/LogoRmWhite.png">
+            <img id="logo" src="Images/LogoRmWhite.png" width="380" height="100">
         </button>
     </form>
 </li>
