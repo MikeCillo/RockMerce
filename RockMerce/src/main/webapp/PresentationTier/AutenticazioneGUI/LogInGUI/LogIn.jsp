@@ -47,7 +47,7 @@
     </div>
 
     <div class="Field">
-        <button id="invia">LOGIN</button><br>       <!--BOUNDARY OBJECT -->
+        <button id="invia">Login</button><br>       <!--BOUNDARY OBJECT -->
     </div>
     </div>
 </form>

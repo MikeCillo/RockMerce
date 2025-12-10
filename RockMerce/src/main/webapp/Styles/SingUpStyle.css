@@ -176,12 +176,12 @@ a:visited{                               /* A ONCE VISISTED*/
     #logo{                                   /* LI LOGO POSITION */
         float: none;
         margin-left: 34%;
-        max-width: 250px;
-        height: auto;
     }
 
-    #logo img{                               /* IMG SETTINGS */
-        width: 20px;
-        height: 20px;
+    img#logo{                               /* IMG SETTINGS */
+        width: 40px !important;
+        height: auto !important;
+        max-width: 100%;
+        display: block;
     }
 }

@@ -93,7 +93,7 @@
 
 <form action="BackHomepage-servlet" >
     <button id="logo" >
-        <img src="./Images/logo.png" width="150" height="150">
+        <img src="./Images/LogoRmWhite.png" width="180" height= "50">
     </button>
 </form>
 
