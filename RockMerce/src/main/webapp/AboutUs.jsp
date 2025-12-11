@@ -11,14 +11,14 @@
 <style>
 
   #riquadro{
-    border: cadetblue 5px solid;
+    border: #c6ac8f 5px solid;
     padding: 12px;
-    background-color: white;
+    background-color: #0a0908;
     border-radius: 15%;
   }
   h1{
     text-align: center;
-    color:cadetblue ;
+    color:#c6ac8f ;
     text-transform: uppercase;
   }
   p{
@@ -28,11 +28,11 @@
     font-family: "Times New Roman";
     font-weight: bold;
     font-size: 24px;
-    color: black;
+    color: #c6ac8f;
   }
 
   #AboutUs{
-      background: #1C889E;
+      background: #c6ac8f;
       color: white;
       opacity: 1;
   }

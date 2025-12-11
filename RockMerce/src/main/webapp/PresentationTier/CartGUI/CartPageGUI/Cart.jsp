@@ -17,18 +17,25 @@
     #cartName{
         font-weight: bold;
         font-size: 28px;
+        color: #eae0d5;
+    }
+
+    #loginAvvertimento{
+        font-weight: bold;
+        font-size: 20px;
+        color: #eae0d5;
     }
 
     #cart{
-    background-color: #1C889E;
+    background-color: #c6ac8f;
     color: white;
     opacity: 1;
     }
 
     .cartHeads th{
         width: 200px;
-        background-color: #FFC12C;
-        color: black;
+        background-color: #22333B;
+        color: #eae0d5;
         font-size: 20px;
         border: 2px solid black;
     }
@@ -36,8 +43,8 @@
     #cartData td{
         text-align: center;
         width: 200px;
-        background-color: #1C889E;
-        color: white;
+        background-color: #c6ac8f;
+        color: black;
         font-size: 20px;
         border: 2px solid black;
     }
@@ -61,21 +68,24 @@
         font-size: 28px;
         border: 2px solid black;
         transition: border 0.5s, font-size 0.5s;
-        background-color: whitesmoke;
+        background-color: #eae0d5;
     }
 
     #cartTotal{
         font-weight: bold;
         font-size: 28px;
+        color: #eae0d5;
+        margin-top: 30px;
 
     }
     #aLog:link{
-        color: #D10C0C;
+        color: #c6ac8f;
     }
 
     #aLog:visited{
-        color: #D10C0C;
+        color: #eae0d5;
     }
+
 </style>
 
 
@@ -133,7 +143,7 @@
         Customer customer = (Customer) session.getAttribute("customer");
         if(customer ==null){%>
 
-                <div>YOU MUST BE LOGGED :<a id="aLog" href="LogIn-Servlet"> CLICK HERE TO LOGIN</a></div>
+                <div id="loginAvvertimento">YOU MUST BE LOGGED :<a id="aLog" href="LogIn-Servlet"> CLICK HERE TO LOGIN</a></div>
 
     <%}
         else {%>
