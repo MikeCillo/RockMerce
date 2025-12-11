@@ -31,7 +31,7 @@ ul{
 
 .card {
     box-shadow: 0 14px 20px 0 black;
-    background-color: white;
+    background-color: #eae0d5;
     width: 300px;
     height: 450px;
     text-align: center;
@@ -78,7 +78,7 @@ ul{
 
 
 #backCard .card:hover {
-    background-color: #FFC12C;
+    background-color: #c6ac8f;
     font-size: 20px;
     transition: font-size 0.5s,background-color 0.5s;
 }

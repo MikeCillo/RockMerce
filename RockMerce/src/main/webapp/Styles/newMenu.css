@@ -1,5 +1,6 @@
 body{                                                       /*Sfondo*/
-    background-image: url("../Images/WhiteWall.jpg");
+    background-image: url("../Images/BrownBackground2.jpg");
+    background-size: 30%;
 }
 
 li{
