@@ -83,3 +83,18 @@ ul{
     transition: font-size 0.5s,background-color 0.5s;
 }
 
+/* --- FIX ALTO CONTRASTO PER LE CARD (Versione Dark) --- */
+body.high-contrast .card {
+    background-color: #000000 !important; /* Card Nera */
+    color: #ffffff !important;            /* Testo Bianco */
+    border: 2px solid #ffffff !important; /* Bordo Bianco ben visibile */
+    box-shadow: none !important;          /* Rimuove l'ombra che sul nero non si vede */
+}
+
+/* Gestisce il bottone interno per farlo risaltare */
+body.high-contrast .InsideButton {
+    background-color: #ffffff !important; /* Bottone Bianco */
+    color: #000000 !important;            /* Testo Nero */
+    border: 2px solid #ffffff !important;
+    font-weight: bold;
+}
