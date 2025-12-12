@@ -8,28 +8,32 @@ import java.util.ArrayList;
 
 public class CheckoutContentDAO {
 
-    public ArrayList<Guitar> retrieveCheckoutContent(int checkoutId) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT idGuitar,name,quantity,price,producer,category,color FROM CheckoutContent WHERE idCheckout=?");
+    public ArrayList<Guitar> retrieveCheckoutContent(final int checkoutId) {
+        final String selectSql = "SELECT idGuitar,name,quantity,price,producer,category,color FROM CheckoutContent WHERE idCheckout=?";
 
-            ps.setInt(1,checkoutId);
-            ResultSet rs = ps.executeQuery();
-            ArrayList<Guitar> guitars= new ArrayList<>();
-            while (rs.next()) {
-                Guitar guitar=new Guitar();
-                guitar.setId(rs.getInt(1));
-                guitar.setName(rs.getString(2));
-                guitar.setDisponibility(rs.getInt(3));
-                guitar.setPrice(rs.getDouble(4));
-                guitar.setProducer(rs.getString(5));
-                guitar.setCategory(rs.getString(6));
-                guitar.setColor(rs.getString(7));
-                guitars.add(guitar);
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(selectSql)) {
+
+            ps.setInt(1, checkoutId);
+
+            try (final ResultSet rs = ps.executeQuery()) {
+                final ArrayList<Guitar> guitars = new ArrayList<>();
+                while (rs.next()) {
+                    final Guitar guitar = new Guitar();
+                    guitar.setId(rs.getInt(1));
+                    guitar.setName(rs.getString(2));
+                    guitar.setDisponibility(rs.getInt(3));
+                    guitar.setPrice(rs.getDouble(4));
+                    guitar.setProducer(rs.getString(5));
+                    guitar.setCategory(rs.getString(6));
+                    guitar.setColor(rs.getString(7));
+                    guitars.add(guitar);
+                }
+                return guitars;
             }
-            return guitars;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error retrieving checkout content for ID: " + checkoutId, e);
         }
     }
 
