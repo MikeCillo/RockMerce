@@ -30,42 +30,52 @@ public class CartDAO {
                 }
             }
 
-        } catch (final Exception e) { 
+        } catch (final Exception e) {
             throw new RuntimeException("Database error during cart creation.", e);
         }
     }
 
 
-    public void upDateCart(Cart cart){
+    public void upDateCart(final Cart cart){
 
-        try (Connection con = DbConnection.getConnection()) {
-            Statement st = con.createStatement();
-            String query = "update Cart set tempTotal='" + cart.getTempTotal() + "', numGuitars=" + cart.getNumGuitars()+ " where id=" + cart.getId() + ";";
-            st.executeUpdate(query);
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
+        final String updateSql = "UPDATE Cart SET tempTotal=?, numGuitars=? WHERE id=?";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(updateSql)) {
+
+            ps.setDouble(1, cart.getTempTotal());
+            ps.setInt(2, cart.getNumGuitars());
+            ps.setInt(3, cart.getId());
+
+            ps.executeUpdate();
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error during cart update for ID: " + cart.getId(), e);
         }
     }
 
 
-    public Cart getCartFromDB(int idCart) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT id,tempTotal,numGuitars FROM Cart WHERE id=?");
-            ps.setInt(1, idCart);
-            ResultSet rs = ps.executeQuery();
+    public Cart getCartFromDB(final int idCart) {
 
-            if (rs.next()) {
-                Cart cart=new Cart();
-                cart.setId(rs.getInt(1));
-                cart.setTempTotal(rs.getDouble(2));
-                cart.setNumGuitars(rs.getInt(3));
-                return cart;
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps =
+                     con.prepareStatement("SELECT id,tempTotal,numGuitars FROM Cart WHERE id=?")) {
+
+            ps.setInt(1, idCart);
+
+            try (final ResultSet rs = ps.executeQuery()) { // Incluso ResultSet
+                if (rs.next()) {
+                    final Cart cart = new Cart();
+                    cart.setId(rs.getInt(1));
+                    cart.setTempTotal(rs.getDouble(2));
+                    cart.setNumGuitars(rs.getInt(3));
+                    return cart;
+                }
+                return null;
             }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error retrieving cart for ID: " + idCart, e);
         }
     }
 }
