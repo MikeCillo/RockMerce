@@ -14,7 +14,7 @@
 <style>
 
     #Shop{
-        background: #1C889E;
+        background: #c6ac8f;
         color: white;
         opacity: 1;
     }

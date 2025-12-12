@@ -11,8 +11,8 @@
 <style>
 
     #LoggedBtn{
-        background-color: #1C889E;
-        color: white;
+        background-color: #c6ac8f;
+        color: #0a0908;
         opacity: 1;
     }
 
@@ -21,8 +21,8 @@
     }
     .HeadCheckout th{
         width: 200px;
-        background-color: #FFC12C;
-        color: black;
+        background-color: #22333B;
+        color: #c6ac8f;
         font-size: 20px;
         border: 2px solid black;
     }
@@ -30,24 +30,24 @@
     .HeadCheckout td{
         text-align: center;
         width: 200px;
-        background-color: #1C889E;
-        color: white;
+        background-color: #c6ac8f;
+        color: #0a0908;
         font-size: 20px;
         border: 2px solid black;
     }
 
     .dataCheckout th{
         width: 200px;
-        background-color: #FFC12C;
-        color: black;
+        background-color: #22333B;
+        color: #c6ac8f;
         font-size: 20px;
         border: 2px solid black;
     }
     .dataCheckout td{
         text-align: center;
         width: 200px;
-        background-color: #1C889E;
-        color: white;
+        background-color: #c6ac8f;
+        color: #0a0908;
         font-size: 20px;
         border: 2px solid black;
     }
