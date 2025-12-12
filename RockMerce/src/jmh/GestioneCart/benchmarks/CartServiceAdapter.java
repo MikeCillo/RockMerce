@@ -19,22 +19,22 @@ public class CartServiceAdapter extends CartService {
 
 
     @Override
-    public Cart retrieveCustomerCart(Customer customer){
-        int cartId=customer.getCart().getId();
+    public Cart retrieveCustomerCart(final Customer customer){
+        final int cartId=customer.getCart().getId();
 
-        Cart cart = this.mockCartDAO.getCartFromDB(cartId);
+        final Cart cart = this.mockCartDAO.getCartFromDB(cartId);
 
         cart.setGuitars(this.mockCartContentDAO.getCartContent(cart.getId()));
         return cart;
     }
 
     @Override
-    public Cart removeGuitarFromCart(Customer customer,int id) {
+    public Cart removeGuitarFromCart(final Customer customer,final int id) {
 
-        Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
+       final Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
 
         if (cart.getNumGuitars() >= 1) {
-            ArrayList<Guitar> guitars = this.mockCartContentDAO.getCartContent(cart.getId());
+            final ArrayList<Guitar> guitars = this.mockCartContentDAO.getCartContent(cart.getId());
             cart.setGuitars(guitars);
             Guitar guitar = cart.removeGuitar(id);
             // aggiorna comunque il carrello
@@ -49,10 +49,10 @@ public class CartServiceAdapter extends CartService {
     }
 
     @Override
-    public Cart freeCart(Customer customer) {
+    public Cart freeCart(final Customer customer) {
 
-        Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
-        ArrayList<Guitar> guitarsCartContent = this.mockCartContentDAO.getCartContent(cart.getId());
+        final Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
+        final ArrayList<Guitar> guitarsCartContent = this.mockCartContentDAO.getCartContent(cart.getId());
 
         if (cart.getNumGuitars() >= 1) {
             this.mockCartContentDAO.removeGuitarsFromCartContent(guitarsCartContent, cart.getId());
@@ -66,8 +66,8 @@ public class CartServiceAdapter extends CartService {
 
 
     @Override
-    public void addGuitarToCart(Customer customer,Guitar guitar){
-        Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
+    public void addGuitarToCart(final Customer customer,final Guitar guitar){
+        final Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
         cart.addGuitar(guitar);
         this.mockCartDAO.upDateCart(cart);
         this.mockCartContentDAO.insertIntoCartContent(customer.getCart().getId(),guitar);

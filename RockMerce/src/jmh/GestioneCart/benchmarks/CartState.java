@@ -11,7 +11,7 @@ import org.openjdk.jmh.annotations.Scope;
 // versione Thread-scoped usata dal benchmark
 @State(Scope.Thread)
 public class CartState {
-    public CartServiceAdapter cartService;
+    public  CartServiceAdapter cartService;
     public Customer customer;
     public Guitar guitarToAdd;
     public static final int CART_SIZE = 1000;
