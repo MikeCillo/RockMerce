@@ -9,7 +9,7 @@ public class AutenticazioneServiceAdapter {
     private final MockCustomerDAO customerDAO = new MockCustomerDAO();
 
     // Riflette la logica di AutenticazioneService.CustomerLogIn
-    public Customer customerLogIn(String emUs, String password) {
+    public Customer customerLogIn(final String emUs, final String password) {
 
         // La logica di controllo nel service è:
         // if(!customerDAO.doCheckEmail(emUs) && !customerDAO.doCheckUsername(emUs))
