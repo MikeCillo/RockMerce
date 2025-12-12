@@ -13,7 +13,7 @@ public class AutenticazioneServiceAdapter {
         if(!customerDAO.doCheckEmail(emUs) && !customerDAO.doCheckUsername(emUs)){
             return null;
         }
-        Customer customer = customerDAO.doCheckLogin(emUs, password);
+        final Customer customer = customerDAO.doCheckLogin(emUs, password);
 
         if (customer != null) {
             return customer;
