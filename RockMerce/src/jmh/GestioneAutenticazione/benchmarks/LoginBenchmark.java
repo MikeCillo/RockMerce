@@ -27,7 +27,7 @@ public class LoginBenchmark {
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     @Threads(1)
     public Customer benchmark_Login_SingleThread_Latency(LoginState state, Blackhole bh) {
-        Customer customer = state.loginService.CustomerLogIn(state.validUsername, state.validPassword);
+        Customer customer = state.loginService.customerLogIn(state.validUsername, state.validPassword);
         bh.consume(customer);
         return customer;
     }
@@ -37,7 +37,7 @@ public class LoginBenchmark {
     @OutputTimeUnit(TimeUnit.SECONDS)
     @Threads(32)
     public Customer benchmark_Login_PeakLoad_Throughput(LoginState state, Blackhole bh) {
-        Customer customer = state.loginService.CustomerLogIn(state.validUsername, state.validPassword);
+        Customer customer = state.loginService.customerLogIn(state.validUsername, state.validPassword);
         bh.consume(customer);
         return customer;
     }
