@@ -251,7 +251,7 @@ public class    GuitarDAO {
 
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("UPDATE FAILED");
+                throw new RuntimeException("UPDATE FAILED");//prova
             }
         }
 
