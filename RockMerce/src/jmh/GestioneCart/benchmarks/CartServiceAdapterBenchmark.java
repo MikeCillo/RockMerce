@@ -18,15 +18,15 @@ public class CartServiceAdapterBenchmark {
     @BenchmarkMode(Mode.Throughput)
     @OutputTimeUnit(TimeUnit.SECONDS)
     @Threads(20)
-    public void benchmark_AddGuitarToCart_Throughput(CartState state) {
+    public void benchmark_AddGuitarToCart_Throughput( CartState state) {
         state.cartService.addGuitarToCart(state.customer, state.guitarToAdd);
     }
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
-    public void benchmark_RemoveGuitarFromCart_Latency(CartState state, Blackhole bh) {
-        Cart cartResult = state.cartService.removeGuitarFromCart(state.customer, state.guitarToAdd.getId());
+    public void benchmark_RemoveGuitarFromCart_Latency( CartState state, final Blackhole bh) {
+        final Cart cartResult = state.cartService.removeGuitarFromCart(state.customer, state.guitarToAdd.getId());
         bh.consume(cartResult);
         state.cartService.addGuitarToCart(state.customer, state.guitarToAdd);
     }
@@ -43,8 +43,8 @@ public class CartServiceAdapterBenchmark {
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     @Threads(1)
-    public void benchmark_RemoveGuitar_SingleThread(CartState state, Blackhole bh) {
-        Cart cartResult = state.cartService.removeGuitarFromCart(state.customer, state.guitarToAdd.getId());
+    public void benchmark_RemoveGuitar_SingleThread( CartState state,final Blackhole bh) {
+        final Cart cartResult = state.cartService.removeGuitarFromCart(state.customer, state.guitarToAdd.getId());
         bh.consume(cartResult);
         state.cartService.addGuitarToCart(state.customer, state.guitarToAdd);
     }
@@ -53,7 +53,7 @@ public class CartServiceAdapterBenchmark {
     @BenchmarkMode(Mode.Throughput)
     @OutputTimeUnit(TimeUnit.SECONDS)
     @Threads(32)
-    public void benchmark_AddGuitar_HighContention(CartState state) {
+    public void benchmark_AddGuitar_HighContention(final CartState state) {
         state.cartService.addGuitarToCart(state.customer, state.guitarToAdd);
     }
 
@@ -62,7 +62,7 @@ public class CartServiceAdapterBenchmark {
     @OutputTimeUnit(TimeUnit.SECONDS)
     @Threads(32)
     public void benchmark_RemoveGuitar_HighContention(CartState state, Blackhole bh) {
-        Cart cartResult = state.cartService.removeGuitarFromCart(state.customer, state.guitarToAdd.getId());
+        final Cart cartResult = state.cartService.removeGuitarFromCart(state.customer, state.guitarToAdd.getId());
         bh.consume(cartResult);
         state.cartService.addGuitarToCart(state.customer, state.guitarToAdd);
     }

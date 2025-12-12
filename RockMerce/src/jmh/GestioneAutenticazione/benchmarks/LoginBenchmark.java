@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
 public class LoginBenchmark {
     @State(Scope.Benchmark)
     public static class LoginState {
-        public AutenticazioneServiceAdapter loginService;
-        public String validUsername = "test_user";
-        public String validPassword = "secure_password";
+        private  AutenticazioneServiceAdapter loginService;
+        public final String validUsername = "test_user";
+        public final String validPassword = "secure_password";
 
         @Setup(Level.Trial)
         public void setup() {
@@ -27,7 +27,7 @@ public class LoginBenchmark {
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     @Threads(1)
     public Customer benchmark_Login_SingleThread_Latency(LoginState state, Blackhole bh) {
-        Customer customer = state.loginService.CustomerLogIn(state.validUsername, state.validPassword);
+       final Customer customer = state.loginService.customerLogIn(state.validUsername, state.validPassword);
         bh.consume(customer);
         return customer;
     }
@@ -37,7 +37,7 @@ public class LoginBenchmark {
     @OutputTimeUnit(TimeUnit.SECONDS)
     @Threads(32)
     public Customer benchmark_Login_PeakLoad_Throughput(LoginState state, Blackhole bh) {
-        Customer customer = state.loginService.CustomerLogIn(state.validUsername, state.validPassword);
+        final Customer customer = state.loginService.customerLogIn(state.validUsername, state.validPassword);
         bh.consume(customer);
         return customer;
     }

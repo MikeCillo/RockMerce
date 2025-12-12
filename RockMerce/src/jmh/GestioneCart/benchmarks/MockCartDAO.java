@@ -8,9 +8,9 @@ public class MockCartDAO extends CartDAO {
 
     // Simula il recupero di un carrello dal DB
     @Override
-    public Cart getCartFromDB(int idCart) {
+    public Cart getCartFromDB(final int idCart) {
         // Restituisce un oggetto Cart fittizio e subito pronto
-        Cart cart = new Cart();
+       final Cart cart = new Cart();
         cart.setId(idCart);
         // Imposta la dimensione per rendere i test di rimozione realistici
         cart.setNumGuitars(CartState.CART_SIZE);
@@ -20,11 +20,10 @@ public class MockCartDAO extends CartDAO {
 
     // Simula l'aggiornamento del carrello nel DB (non fa nulla)
     @Override
-    public void upDateCart(Cart cart){
-        return;
+    public void upDateCart(final Cart cart){
     }
 
-    // Simula la creazione del carrello (non fa nulla)
+    // Simula la creazione del carrello
     @Override
     public int createCart() {
         return 1;
