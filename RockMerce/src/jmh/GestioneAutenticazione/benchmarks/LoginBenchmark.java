@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
 public class LoginBenchmark {
     @State(Scope.Benchmark)
     public static class LoginState {
-        public AutenticazioneServiceAdapter loginService;
-        public String validUsername = "test_user";
-        public String validPassword = "secure_password";
+        private  AutenticazioneServiceAdapter loginService;
+        public final String validUsername = "test_user";
+        public final String validPassword = "secure_password";
 
         @Setup(Level.Trial)
         public void setup() {
