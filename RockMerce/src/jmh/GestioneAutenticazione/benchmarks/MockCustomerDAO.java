@@ -21,7 +21,6 @@ public class MockCustomerDAO {
     }
 
     public boolean doCheckUsername(String emUs) {
-        // Simulazione di una lookup veloce nel DB
         try {
             TimeUnit.NANOSECONDS.sleep(MOCK_DB_LATENCY_NS / 3);
         } catch (InterruptedException e) {
@@ -30,9 +29,7 @@ public class MockCustomerDAO {
         return false; // Simula che la ricerca si basi su email
     }
 
-    // Metodo principale chiamato dopo i check iniziali
     public Customer doCheckLogin(String emUs, String password) {
-        // Simulazione del costo di I/O + recupero dell'oggetto Customer completo
         try {
             TimeUnit.NANOSECONDS.sleep(MOCK_DB_LATENCY_NS);
         } catch (InterruptedException e) {
