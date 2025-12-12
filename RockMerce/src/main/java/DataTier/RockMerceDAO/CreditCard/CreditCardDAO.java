@@ -7,50 +7,61 @@ import java.sql.*;
 
 public class CreditCardDAO {
 
-    public int doCreditCardSave(CreditCard card) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO CreditCard (cardNumber, owner, expireDate, cvv) VALUES(?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
+    public int doCreditCardSave(final CreditCard card) {
+        final String insertSql = "INSERT INTO CreditCard (cardNumber, owner, expireDate, cvv) VALUES(?,?,?,?)";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+
             ps.setString(1, card.getCardNumber());
             ps.setString(2, card.getOwner());
             ps.setString(3, card.getExpireDate());
             ps.setInt(4, card.getCvv());
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("INSERT error.");
+                throw new RuntimeException("CreditCard INSERT error: Zero rows affected.");
             }
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            int id = rs.getInt(1);
-            card.setId(id);
-            return id;
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            try (final ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    final int id = rs.getInt(1);
+                    card.setId(id);
+                    return id;
+                } else {
+                    throw new RuntimeException("CreditCard INSERT error: Database did not return the generated key.");
+                }
+            }
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error during credit card save.", e);
         }
 
     }
 
 
-    public CreditCard retrieveCreditCardById(int id) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT * FROM CreditCard WHERE id=?");
+    public CreditCard retrieveCreditCardById(final int id) {
+        final String selectSql = "SELECT id, cardNumber, owner, expireDate, cvv FROM CreditCard WHERE id=?";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(selectSql)) {
+
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                CreditCard card=new CreditCard();
-                card.setId(Integer.parseInt(rs.getString(1)));
-                card.setCardNumber(rs.getString(2));
-                card.setOwner(rs.getString(3));
-                card.setExpireDate(rs.getString(4));
-                card.setCvv(Integer.parseInt(rs.getString(5)));
-                return card;
+
+            try (final ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    final CreditCard card = new CreditCard();
+                    card.setId(rs.getInt(1));
+                    card.setCardNumber(rs.getString(2));
+                    card.setOwner(rs.getString(3));
+                    card.setExpireDate(rs.getString(4));
+                    card.setCvv(rs.getInt(5));
+                    return card;
+                }
+                return null;
             }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error retrieving credit card by ID: " + id, e);
         }
     }
 

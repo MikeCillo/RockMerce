@@ -12,10 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerDAO {
-   public void doCustomerSave(Customer customer) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO Customer (username, email, name, surname, password, phone , country, city ,address,cardId,cartId) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+
+
+    public void doCustomerSave(final Customer customer) {
+        final String insertSql = "INSERT INTO Customer (username, email, name, surname, password, phone , country, city ,address,cardId,cartId) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(insertSql)) {
+
             ps.setString(1, customer.getUsername());
             ps.setString(2, customer.getEmail());
             ps.setString(3, customer.getName());
@@ -28,50 +33,59 @@ public class CustomerDAO {
             ps.setInt(10, customer.getCreditCard().getId());
             ps.setInt(11, customer.getCart().getId());
 
-
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("NEW CUSTOMER REGISTRATION FAILED");
+                throw new RuntimeException("NEW CUSTOMER REGISTRATION FAILED: Zero rows affected by insert.");
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error during new customer registration for username: " + customer.getUsername(), e);
         }
     }
 
-    public boolean doCheckEmail(String email) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM Customer where  email=? ");
+
+
+    public boolean doCheckEmail(final String email) {
+        final String selectSql = "SELECT * FROM Customer WHERE email = ?";
+
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(selectSql)) {
+
             ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
 
-            if (!rs.next()) {
-                return true;
-            } else {
-                return false;
+
+            try (final ResultSet rs = ps.executeQuery()) {
+
+                return !rs.next();
+
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error during email check for: " + email, e);
         }
     }
 
 
-    public boolean doCheckUsername(String username) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM Customer where  username=? ");
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
 
-            if (!rs.next()) {
-                return true;
-            } else {
-                return false;
+
+
+
+
+    public boolean doCheckUsername(final String username) {
+        final String selectSql = "SELECT * FROM Customer WHERE username = ?";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(selectSql)) {
+
+            ps.setString(1, username);
+
+            try (final ResultSet rs = ps.executeQuery()) {
+                return !rs.next();
+
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (final SQLException e) {
+            throw new RuntimeException("Database error during username check for: " + username, e);
         }
     }
 
@@ -160,3 +174,5 @@ public class CustomerDAO {
     }
 
 }
+
+
