@@ -1,0 +1,127 @@
+/* --- global.css --- */
+/* Questo file gestisce i colori di TUTTO il sito in un colpo solo */
+
+:root {
+    /* COLORI STANDARD (Quelli che avevi prima) */
+    --btn-bg: black;               /* Sfondo bottoni */
+    --btn-text: white;             /* Testo bottoni */
+    --accent-color: #c6ac8f;       /* Quel bell'azzurro/ottanio per l'hover */
+    --dropdown-bg: white;          /* Sfondo menu a tendina */
+    --dropdown-text: black;        /* Testo menu a tendina */
+    --btn-border: none;            /* Di base i bottoni non hanno bordo */
+}
+
+/* MODALITÀ ALTO CONTRASTO (Si attiva col tasto) */
+body.high-contrast {
+    /* Sfondo nero assoluto e testo giallo */
+    --btn-bg: #000000;
+    --btn-text: #FFFF00;       /* Giallo puro */
+    --accent-color: #00FFFF;   /* Ciano acceso per l'hover (si vede bene sul nero) */
+    --dropdown-bg: #000000;
+    --dropdown-text: #FFFF00;
+
+    /* Aggiungiamo un bordo giallo, altrimenti un bottone nero su sfondo nero non si vede! */
+    --btn-border: 2px solid #FFFF00;
+}
+
+/* REGOLE SPECIALI PER ALTO CONTRASTO */
+body.high-contrast {
+    /* Importante: nasconde l'immagine di sfondo "BrownBackground" per massima leggibilità */
+    background-image: none !important;
+    background-color: #000000 !important;
+}
+
+/* Stile del bottone che cambierà il contrasto (creato via JS) */
+#btn-contrasto {
+    position: fixed; /* Rimane fisso mentre scorri */
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999; /* Sta sopra a tutto */
+    padding: 10px 15px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid var(--accent-color);
+    font-family: sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* --- POSIZIONE DEL PULSANTE --- */
+#accessibilita-toolbar {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+#btn-contrast {
+    background: #000;      /* Sfondo nero */
+    color: #fff;           /* Testo bianco */
+    border: 2px solid #fff;
+    font-weight: bold;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 30px;   /* Arrotondato */
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+#btn-contrast:hover {
+    background: #333;
+    transform: scale(1.05); /* Effetto ingrandimento al passaggio del mouse */
+}
+
+/* --- LOGICA ALTO CONTRASTO (Cosa succede quando clicchi) --- */
+body.high-contrast {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+/* Rende tutti i link gialli per massima visibilità */
+body.high-contrast a {
+    color: #ffff00 !important;
+    text-decoration: underline;
+}
+
+/* Adatta input e bottoni del sito */
+body.high-contrast button,
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+}
+
+/* Nasconde ombre e sfondi decorativi per pulire la lettura */
+body.high-contrast * {
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+/* Posiziona il form in alto a sinistra */
+.home-logo-form {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100; /* Assicura che stia sopra tutto */
+}
+
+/* Rimuove lo stile standard del bottone (bordi, sfondi grigi) */
+.clean-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Stile dell'immagine del logo */
+.clean-button img {
+    width: 200px;  /* Regola la grandezza qui */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+

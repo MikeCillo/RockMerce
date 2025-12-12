@@ -106,3 +106,21 @@ input:focus{
     /*transition: font-size 0.8s,width 0.8s,border 0.8s,color 0.8s;*/
 }
 
+/* Stile per il logo "Torna alla Home" */
+.logo-home-link {
+    position: absolute; /* Lo fissa in un punto preciso */
+    top: 20px;          /* Distanza dall'alto */
+    left: 20px;         /* Distanza da sinistra */
+    z-index: 10;        /* Assicura che stia sopra lo sfondo */
+}
+
+.logo-home-link img {
+    width: 80px;        /* Cambia questo numero per ingrandire/rimpicciolire */
+    height: auto;       /* Mantiene le proporzioni */
+    transition: transform 0.3s ease;
+}
+
+/* Effetto quando passi sopra col mouse */
+.logo-home-link img:hover {
+    transform: scale(1.1); /* Leggero zoom */
+}

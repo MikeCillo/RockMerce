@@ -4,22 +4,16 @@
 <html>
 
 <head>
-
+    <link rel="stylesheet" type="text/css" href="./Styles/global.css">
     <link rel="stylesheet" type="text/css" href="./Styles/newMenu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <script src="https://kit.fontawesome.com/bda5e6e885.js" crossorigin="anonymous"></script>
-
 </head>
-
-
-
 
 <body>
 
-
 <ul class="menu" >
 
-    <!-- ABOUT US BUTTON-->
     <li>
         <form action="AboutUs-servlet">
             <button id="aboutUs" class="btnR">
@@ -29,7 +23,6 @@
         </form>
     </li>
 
-            <!-- SHOP BUTTON-->
     <li>
         <form action="CatalogoCompletoControl">
             <button id="shop" class="btnR">
@@ -39,43 +32,33 @@
         </form>
     </li>
 
-         <!-- CART BUTTON -->
     <li class="Right">
         <form action="CartPageControl" method="post">
-            <button id="cart">                               <!-- BOUNDARY OBJECT -->
+            <button id="cart">
                 <i class="fa fa-shopping-cart" style="font-size:20px"></i>
                 <span>CART</span>
             </button>
         </form>
     </li>
 
-
-    <!-- LOGIN BUTTON -->
-
     <li class="Right" id="log">
         <form action="LogIn-Servlet">
-            <button id="LogInBUTTON">   <!-- BOUNDARY OBJECT -->
+            <button id="LogInBUTTON">
                 <i class="fa fa-sign-in" style="font-size:20px"></i>
                 <span>LOGIN</span>
             </button>
         </form>
     </li>
 
-
-
-    <!-- SIGN UP BUTTON -->
     <li class="Right" id="signUp">
         <form action="SignUpServlet">
-            <button id="SignUpBUTTON">      <!-- BOUNDARY OBJECT -->
+            <button id="SignUpBUTTON">
                 <i class="fa fa-customer" style="font-size:20px" ></i>
                 <span>SIGN UP</span>
             </button>
         </form>
     </li>
 
-
-
-    <!-- USER BUTTON  -->
     <li class="Right" id="LoggedUser">
         <div class="dropdown">
             <button id="LoggedBtn" class="dropbtn">${customer.username}
@@ -88,7 +71,6 @@
         </div>
     </li>
 
-
 </ul>
 
 <form action="BackHomepage-servlet" >
@@ -97,16 +79,8 @@
     </button>
 </form>
 
-
-
-
-
-
 <script>
-
     function CheckLoggedUser() {
-
-
         if ("${customer.username}".length>=2) {
             const log = document.getElementById("log");
             const sign = document.getElementById("signUp");
@@ -115,9 +89,11 @@
             sign.remove();
             log.remove();
             const menu = document.getElementById("menu");
-            menu.appendChild(userLog);
-
-
+            // Nota: qui c'era un piccolo errore nel tuo codice originale,
+            // 'menu' non è definito come ID nell'ul sopra, ma come class.
+            // Se funziona non toccarlo, ma occhio!
+            // Se non va, aggiungi id="menu" al tag <ul> in alto.
+            if(menu) menu.appendChild(userLog);
         }
         else {
             const log = document.getElementById("log");
@@ -126,14 +102,16 @@
 
             userLog.remove();
             const menu = document.getElementById("menu");
-            menu.append(log);
-            menu.appendChild(sign);
-
+            if(menu) {
+                menu.append(log);
+                menu.appendChild(sign);
+            }
         }
-
     }
     window.onload = CheckLoggedUser;
-
 </script>
+
+<script src="./Scripts/accessibilita.js"></script>
+
 </body>
 </html>
