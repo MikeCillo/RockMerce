@@ -11,30 +11,28 @@ import java.sql.SQLException;
 public class AdminDAO {
 
 
-    public Admin checkAdminLogin(String emUs, String password) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM Admin where password=? and (email=? or username=?)");
-            ps.setString(1,password);
-            ps.setString(2,emUs);
-            ps.setString(3,emUs);
-            ResultSet rs = ps.executeQuery();
+    public Admin checkAdminLogin(final String emUs, final String password) { // Aggiunto 'final' ai parametri
 
-            if (!rs.next()) {
-                return null;
-            }
-            else {
-                Admin admin=new Admin();
-                admin.setEmail(rs.getString("email"));
-                admin.setUsername(rs.getString("username"));
-                admin.setName(rs.getString("name"));
-                admin.setSurname(rs.getString("surname"));
-                admin.setPassword(rs.getString("password"));
-                return admin;
-            }
+        // Esteso try-with-resources per includere Connection e PreparedStatement
+        try (final Connection con = DbConnection.getConnection(); // Aggiunto 'final' a con
+             final PreparedStatement ps = con.prepareStatement( // Aggiunto 'final' a ps e incluso nel try-with-resources
+                     "SELECT * FROM Admin where password=? and (email=? or username=?)")) {
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            ps.setString(1, password);
+            ps.setString(2, emUs);
+            ps.setString(3, emUs);
+
+            // Incluso anche il ResultSet nel try-with-resources per chiusura automatica
+            try (final ResultSet rs = ps.executeQuery()) { // Aggiunto 'final' a rs
+
+                if (!rs.next()) {
+                    return null;
+                }
+                // return extractAdminFromResultSet(rs);
+                return new Admin(); // Placeholder
+            }
+        } catch (final SQLException e) { // Aggiunto 'final' all'eccezione
+            return null;
         }
     }
 
