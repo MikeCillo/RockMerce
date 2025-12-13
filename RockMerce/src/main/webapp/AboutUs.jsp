@@ -126,19 +126,19 @@
 
         <div class="contact-card">
             <div class="icon-box">
-                <i class="fa-solid fa-envelope"></i>
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
             </div>
             <span class="contact-label">Hai bisogno di informazioni?</span>
-            <a href="mailto:support@rockmerce.com" class="contact-value">support@rockmerce.com</a>
+            <a href="mailto:support@rockmerce.com" class="contact-value" aria-label="Invia mail all'assistenza clienti">support@rockmerce.com</a>
             <span style="font-size: 12px; margin-top: 5px; opacity: 0.7;">Rispondiamo H24</span>
         </div>
 
         <div class="contact-card">
             <div class="icon-box">
-                <i class="fa-solid fa-phone"></i>
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
             </div>
             <span class="contact-label">Parla con un esperto</span>
-            <a href="tel:+390876357821" class="contact-value">+39 0876 357 821</a>
+            <a href="tel:+390876357821" class="contact-value" aria-label="Chiama assistenza clienti">+39 0876 357 821</a>
             <span style="font-size: 12px; margin-top: 5px; opacity: 0.7;">Lun-Ven 9:00 - 18:00</span>
         </div>
 

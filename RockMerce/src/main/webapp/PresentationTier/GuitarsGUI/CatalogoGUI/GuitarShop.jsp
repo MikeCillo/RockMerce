@@ -65,7 +65,7 @@
                             </div>
 
                             <div id="img">
-                                <img id="gImg" src="${guitar.image}">
+                                <img id="gImg" src="${guitar.image}" alt="${guitar.name}">
                             </div>
 
                             <div class="inside">
