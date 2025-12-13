@@ -122,48 +122,58 @@ public class    GuitarDAO {
 
 
     public void decrementGuitar(Guitar guitar) {
+
         try (final Connection con = DbConnection.getConnection()) {
 
             if (guitar.getDisponibility() >= 2) {
 
-                final PreparedStatement ps = con.prepareStatement(
-                        "UPDATE Guitar SET disponibility=?  WHERE id=?  ");
+                // Includi ps nel blocco try-with-resources interno
+                try (final PreparedStatement ps = con.prepareStatement(
+                        "UPDATE Guitar SET disponibility=?  WHERE id=?  ")) {
 
-                ps.setInt(1, guitar.getDisponibility() - 1);
-                ps.setInt(2, guitar.getId());
+                    ps.setInt(1, guitar.getDisponibility() - 1);
+                    ps.setInt(2, guitar.getId());
 
 
-                if (ps.executeUpdate() != 1) {
-                    throw new GuitarException("Decrement error.");
-                }
+                    if (ps.executeUpdate() != 1) {
+                        throw new GuitarException("Decrement error.");
+                    }
+                } // ps chiuso qui
 
             } else if (guitar.getDisponibility() == 0) {
 
-                final PreparedStatement ps = con.prepareStatement(
-                        "UPDATE Guitar SET visibility=?  WHERE id=? ");
+                // Includi ps nel blocco try-with-resources interno
+                try (final PreparedStatement ps = con.prepareStatement(
+                        "UPDATE Guitar SET visibility=?  WHERE id=? ")) {
 
-                ps.setString(1, "no");
-                ps.setInt(2, guitar.getId());
+                    ps.setString(1, "no");
+                    ps.setInt(2, guitar.getId());
 
 
-                if (ps.executeUpdate() != 1) {
-                    throw new GuitarException("Decrement error.");
-                }
+                    if (ps.executeUpdate() != 1) {
+                        throw new GuitarException("Decrement error.");
+                    }
+                } // ps chiuso qui
+
             } else if (guitar.getDisponibility() == 1) {
-                final PreparedStatement ps = con.prepareStatement(
-                        "UPDATE Guitar SET disponibility=?,visibility=?  WHERE id=? ");
 
-                ps.setInt(1, 0);
-                ps.setString(2, "no");
-                ps.setInt(3, guitar.getId());
+                // Includi ps nel blocco try-with-resources interno
+                try (final PreparedStatement ps = con.prepareStatement(
+                        "UPDATE Guitar SET disponibility=?,visibility=?  WHERE id=? ")) {
+
+                    ps.setInt(1, 0);
+                    ps.setString(2, "no");
+                    ps.setInt(3, guitar.getId());
 
 
-                if (ps.executeUpdate() != 1) {
-                    throw new GuitarException("Decrement error.");
-                }
+                    if (ps.executeUpdate() != 1) {
+                        throw new GuitarException("Decrement error.");
+                    }
+                } // ps chiuso qui
             }
 
         } catch (SQLException e) {
+            // La Connection (con) è chiusa qui
             throw new GuitarException("Database error decrementing guitar disponibility.");
         }
     }
@@ -235,11 +245,12 @@ public class    GuitarDAO {
 
 
     public void deleteGuitar(Guitar guitar) {
-        try (final Connection con = DbConnection.getConnection()) {
 
-            final PreparedStatement ps = con.prepareStatement(
-                    "DELETE FROM Guitar " +
-                            "WHERE id =?");
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(
+                     "DELETE FROM Guitar " +
+                             "WHERE id =?")) {
 
             ps.setInt(1, guitar.getId());
 
@@ -256,9 +267,9 @@ public class    GuitarDAO {
 
     public void doUpdateGuitar(Guitar guitar){
 
-        try (final Connection con = DbConnection.getConnection()) {
-            final PreparedStatement ps =
-                    con.prepareStatement ("update Guitar set name=?,price=?,producer=?,category=?,disponibility=?,sound=?,description=?,visibility=?,color=? where id=?");
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement (
+                     "update Guitar set name=?,price=?,producer=?,category=?,disponibility=?,sound=?,description=?,visibility=?,color=? where id=?")) {
 
             ps.setString(1,guitar.getName());
             ps.setDouble(2,guitar.getPrice());
@@ -275,6 +286,7 @@ public class    GuitarDAO {
             if (ps.executeUpdate() != 1) {
                 throw new GuitarException("UPDATE FAILED");
             }
+
         }
 
         catch (SQLException e) {
@@ -315,9 +327,10 @@ public class    GuitarDAO {
 
     public boolean doInsertNewGuitar(Guitar guitar){
 
-        try (final Connection con = DbConnection.getConnection()) {
-            final PreparedStatement ps =
-                    con.prepareStatement ("INSERT into Guitar (name,price,producer,category,disponibility,sound,image,description,visibility,color) values (?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement (
+                     "INSERT into Guitar (name,price,producer,category,disponibility,sound,image,description,visibility,color) values (?,?,?,?,?,?,?,?,?,?)",
+                     Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1,guitar.getName());
             ps.setDouble(2,guitar.getPrice());
@@ -335,8 +348,8 @@ public class    GuitarDAO {
                 throw new GuitarException("INSERT FAILED");
             }
             return true;
-        }
 
+        }
         catch (SQLException e) {
             throw new GuitarException("Database error inserting new guitar.");
         }

@@ -20,6 +20,7 @@
         <!-- Esclude i sorgenti LogicTier dalla coverage report -->
         <sonar.coverage.exclusions>
             **/DataTier/DBCONNECTION/DbConnection.java,
+            **/LogicTier/exception/**/*.java,
             **/LogicTier/GestioneAdmin/**/*.java,
             **/LogicTier/GestioneAutenticazione/**/*.java,
             **/LogicTier/GestioneCart/**/*.java,

@@ -2,6 +2,9 @@ package DataTier.RockMerceDAO.Customer;
 
 import DataTier.DBCONNECTION.DbConnection;
 import LogicTier.Entità.Customer;
+import LogicTier.Entità.CreditCard;
+import LogicTier.Entità.Cart;
+import LogicTier.exception.CustomerException;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +14,7 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -130,5 +134,75 @@ class CustomerDAOTest {
         Customer c2 = dao.getCustomerByCart(5);
         assertNull(c2);
     }
-}
 
+    @Test
+    void doCustomerSave_shouldThrowWhenZeroRowsOrSqlError() throws Exception {
+        DataSource ds = mock(DataSource.class);
+        Connection con = mock(Connection.class);
+        PreparedStatement ps = mock(PreparedStatement.class);
+
+        when(ds.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(ps);
+        when(ps.executeUpdate()).thenReturn(0);
+
+        injectDataSource(ds);
+
+        Customer customer = new Customer();
+        customer.setUsername("u");
+        customer.setEmail("e");
+        customer.setName("n");
+        customer.setSurname("s");
+        customer.setPassword("pw");
+        customer.setPhone("ph");
+        customer.setCountry("ct");
+        customer.setCity("ci");
+        customer.setAddress("ad");
+        CreditCard cc = new CreditCard(); cc.setId(1); customer.setCreditCard(cc);
+        Cart cart = new Cart(); cart.setId(2); customer.setCart(cart);
+
+        CustomerDAO dao = new CustomerDAO();
+        assertThrows(CustomerException.class, () -> dao.doCustomerSave(customer));
+
+        // SQLException wrap
+        DataSource ds2 = mock(DataSource.class);
+        when(ds2.getConnection()).thenThrow(new SQLException("boom"));
+        injectDataSource(ds2);
+        assertThrows(CustomerException.class, () -> dao.doCustomerSave(customer));
+    }
+
+    @Test
+    void doCheckEmail_shouldWrapSqlException() throws Exception {
+        DataSource ds = mock(DataSource.class);
+        when(ds.getConnection()).thenThrow(new SQLException("boom"));
+        injectDataSource(ds);
+        CustomerDAO dao = new CustomerDAO();
+        assertThrows(CustomerException.class, () -> dao.doCheckEmail("a@b.com"));
+    }
+
+    @Test
+    void doCheckUsername_shouldWrapSqlException() throws Exception {
+        DataSource ds = mock(DataSource.class);
+        when(ds.getConnection()).thenThrow(new SQLException("boom"));
+        injectDataSource(ds);
+        CustomerDAO dao = new CustomerDAO();
+        assertThrows(CustomerException.class, () -> dao.doCheckUsername("userx"));
+    }
+
+    @Test
+    void doCheckLogin_shouldWrapSqlException() throws Exception {
+        DataSource ds = mock(DataSource.class);
+        when(ds.getConnection()).thenThrow(new SQLException("boom"));
+        injectDataSource(ds);
+        CustomerDAO dao = new CustomerDAO();
+        assertThrows(CustomerException.class, () -> dao.doCheckLogin("e","pw"));
+    }
+
+    @Test
+    void getCustomerByCart_shouldWrapSqlException() throws Exception {
+        DataSource ds = mock(DataSource.class);
+        when(ds.getConnection()).thenThrow(new SQLException("boom"));
+        injectDataSource(ds);
+        CustomerDAO dao = new CustomerDAO();
+        assertThrows(CustomerException.class, () -> dao.getCustomerByCart(3));
+    }
+}

@@ -104,7 +104,7 @@ public class CustomerDAO {
             ps.setString(1, password);
             ps.setString(2, emUs);
             ps.setString(3, emUs);
-            try (ResultSet rs = ps.executeQuery()) {
+            try (final ResultSet rs = ps.executeQuery()) {
 
                 if (!rs.next()) {
                     return null;
