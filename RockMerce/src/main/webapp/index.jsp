@@ -85,26 +85,32 @@
 
     <form action="CatalogoElectricControl">
         <button class="clean-btn guitar-card" id="CatalogoElectricBUTTON">
-            <img src="Images/Elettrica.png" alt="Electric Guitar">
+            <img src="Images/Elettrica.png" alt="">
             <span class="card-title">ELECTRIC</span>
         </button>
     </form>
 
     <form action="CatalogoClassicControl">
         <button class="clean-btn guitar-card" id="CatalogoClassicBUTTON">
-            <img src="Images/ClassicaPng.png" alt="Classical Guitar">
+            <img src="Images/ClassicaPng.png" alt="">
             <span class="card-title">CLASSICAL</span>
         </button>
     </form>
 
     <form action="CatalogoSemiAcusticControl">
         <button class="clean-btn guitar-card" id="CatalogoSemiAcusticBUTTON">
-            <img src="Images/SemiAcousticPng.png" alt="Semi Acoustic Guitar">
+            <img src="Images/SemiAcousticPng.png" alt="">
             <span class="card-title">SEMI-ACOUSTIC</span>
         </button>
     </form>
 
 </div>
+
+<br><br>
+<footer class="site-footer">
+    <div id="ecoindex-badge"></div>
+</footer>
+<script src="https://cdn.jsdelivr.net/gh/cnumr/ecoindex_badge@3/assets/js/ecoindex-badge.js" defer></script>
 
 </body>
 </html>

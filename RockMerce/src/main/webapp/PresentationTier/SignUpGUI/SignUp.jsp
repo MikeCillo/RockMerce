@@ -17,7 +17,7 @@
 <body>
 
 <form action="BackHomepage-servlet" method="get" class="home-logo-form">
-    <button type="submit" class="clean-button">
+    <button type="submit" class="clean-button" aria-label="Torna alla Homepage">
         <img src="<%= request.getContextPath() %>/Images/LogoRmWhite.png" alt="Torna alla Home">
     </button>
 </form>

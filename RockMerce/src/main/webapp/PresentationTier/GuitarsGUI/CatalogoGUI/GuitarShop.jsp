@@ -65,7 +65,7 @@
                             </div>
 
                             <div id="img">
-                                <img id="gImg" src="${guitar.image}">
+                                <img id="gImg" src="${guitar.image}" alt="${guitar.name}">
                             </div>
 
                             <div class="inside">
@@ -94,7 +94,11 @@
        </c:forEach>
 </ul>
 
-
+<br><br>
+<footer class="site-footer">
+    <div id="ecoindex-badge"></div>
+</footer>
+<script src="https://cdn.jsdelivr.net/gh/cnumr/ecoindex_badge@3/assets/js/ecoindex-badge.js" defer></script>
 
 
 </body>

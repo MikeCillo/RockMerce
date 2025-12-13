@@ -15,7 +15,7 @@
 <ul id="gPage">
     <li>
         <div id="product">                                     <!-- GUITAR'S PHOTO !-->
-            <img id="gImage" src="${guitar.image}">
+            <img id="gImage" src="${guitar.image} alt="${guitar.name}">
         </div>
     </li>
 

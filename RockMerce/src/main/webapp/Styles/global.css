@@ -116,3 +116,20 @@ body.high-contrast * {
     transition: transform 0.3s ease;
 }
 
+/* --- STILE FOOTER ECOINDEX --- */
+.site-footer {
+    width: 100%;
+    text-align: center; /* Centra il badge */
+    padding: 30px 0;    /* Dà spazio sopra e sotto */
+    margin-top: 50px;   /* Stacca il footer dal resto del contenuto */
+
+    /* Se vuoi uno sfondo scuro per il footer, scommenta queste righe: */
+    /* background-color: #0a0908; */
+    /* border-top: 2px solid #c6ac8f; */
+}
+
+/* Assicura che il badge non si sovrapponga al tasto accessibilità */
+#ecoindex-badge {
+    display: inline-block;
+    margin-bottom: 20px; /* Lascia spazio in basso per non coprire i pulsanti fissi */
+}
