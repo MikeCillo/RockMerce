@@ -2,6 +2,7 @@ package DataTier.RockMerceDAO.CreditCard;
 
 import DataTier.DBCONNECTION.DbConnection;
 import LogicTier.Entità.CreditCard;
+import LogicTier.exception.CrediCardException;
 
 import java.sql.*;
 
@@ -19,7 +20,7 @@ public class CreditCardDAO {
             ps.setInt(4, card.getCvv());
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("CreditCard INSERT error: Zero rows affected.");
+                throw new CrediCardException("CreditCard INSERT error: Zero rows affected.");
             }
 
             try (final ResultSet rs = ps.getGeneratedKeys()) {
@@ -28,12 +29,12 @@ public class CreditCardDAO {
                     card.setId(id);
                     return id;
                 } else {
-                    throw new RuntimeException("CreditCard INSERT error: Database did not return the generated key.");
+                    throw new CrediCardException("CreditCard INSERT error: Database did not return the generated key.");
                 }
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error during credit card save.", e);
+            throw new CrediCardException("Database error during credit card save.");
         }
 
     }
@@ -61,7 +62,7 @@ public class CreditCardDAO {
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error retrieving credit card by ID: " + id, e);
+            throw new CrediCardException("Database error retrieving credit card by ID: " + id);
         }
     }
 

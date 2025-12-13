@@ -4,6 +4,8 @@ import DataTier.RockMerceDAO.Cart.CartDAO;
 import DataTier.DBCONNECTION.DbConnection;
 import LogicTier.Entità.Guitar;
 import DataTier.RockMerceDAO.Guitar.GuitarDAO;
+import LogicTier.exception.CartContentException;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -48,7 +50,7 @@ public class CartContentDAO {
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error during insert/update into CartContent.", e);
+            throw new CartContentException("Database error during insert/update into CartContent.");
         }
     }
 
@@ -94,10 +96,10 @@ public class CartContentDAO {
                         cartDAO.upDateCart(cart);
                     }
                 }
-            } // rs chiuso
+            }
             return guitars;
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error retrieving cart content for ID: " + cartId, e);
+            throw new CartContentException("Database error retrieving cart content for ID: " + cartId);
         }
     }
 
@@ -114,11 +116,11 @@ public class CartContentDAO {
 
             if (ps.executeUpdate() != 1) {
 
-                throw new RuntimeException("GUITAR (ID: " + guitarId + ") CANNOT BE REMOVED FROM CART CONTENT (Cart ID: " + cartId + ") - 0 rows affected.");
+                throw new CartContentException("GUITAR (ID: " + guitarId + ") CANNOT BE REMOVED FROM CART CONTENT (Cart ID: " + cartId + ") - 0 rows affected.");
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error during removal of guitar " + guitarId + " from cart " + cartId, e);
+            throw new CartContentException("Database error during removal of guitar " + guitarId + " from cart " + cartId);
         }
     }
 
@@ -130,17 +132,18 @@ public class CartContentDAO {
         try (final Connection con = DbConnection.getConnection();
              final PreparedStatement ps = con.prepareStatement(deleteSql)) {
 
+            ps.setInt(1, cartId);
             for (final Guitar guitar : guitars) {
-                ps.setInt(1, cartId);
+
                 ps.setInt(2, guitar.getId());
 
                 if (ps.executeUpdate() != 1) {
-                    throw new RuntimeException("GUITAR (ID: " + guitar.getId() + ") CANNOT BE REMOVED FROM CART CONTENT (Cart ID: " + cartId + ") - 0 rows affected.");
+                    throw new CartContentException("GUITAR (ID: " + guitar.getId() + ") CANNOT BE REMOVED FROM CART CONTENT (Cart ID: " + cartId + ") - 0 rows affected.");
                 }
             }
 
         } catch (final SQLException e) { // Aggiunto 'final'
-            throw new RuntimeException("Database error during batch removal of guitars from cart " + cartId, e);
+            throw new CartContentException("Database error during batch removal of guitars from cart " + cartId);
         }
     }
 }

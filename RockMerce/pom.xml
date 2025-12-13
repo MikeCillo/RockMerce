@@ -15,6 +15,23 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <junit.version>5.8.2</junit.version>
+        <!-- Esclusione Sonar per cartella JMH -->
+        <sonar.exclusions>**/src/jmh/**/*.*</sonar.exclusions>
+        <!-- Esclude i sorgenti LogicTier dalla coverage report -->
+        <sonar.coverage.exclusions>
+            **/DataTier/DBCONNECTION/DbConnection.java,
+            **/LogicTier/GestioneAdmin/**/*.java,
+            **/LogicTier/GestioneAutenticazione/**/*.java,
+            **/LogicTier/GestioneCart/**/*.java,
+            **/LogicTier/GestioneGuitars/**/*.java,
+            **/LogicTier/GestioneSignUp/**/*.java,
+            **/LogicTier/AboutUsServlet.java,
+            **/LogicTier/BackHomepageServlet.java,
+            **/LogicTier/RockMerceStartServlet.java,
+            **/Scripts/AdminJS/UpdateGuitarValidation.js,
+            **/Scripts/SignUpJS/SignUpValidationJS.js,
+            **/Scripts/accessibilita.js
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -29,6 +46,14 @@
         <groupId>com.google.protobuf</groupId>
         <artifactId>protobuf-java</artifactId>
         <version>4.33.1</version>
+        </dependency>
+
+        <!-- H2 in-memory DB for tests -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+            <scope>test</scope>
         </dependency>
 
 
@@ -93,7 +118,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.11.0</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -168,6 +193,112 @@
                             <version>1.37</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <!-- Force a modern surefire so JUnit4 tests are executed reliably -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.14</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Genera il report XML nella posizione che SonarQube si aspetta per default -->
+                            <dataFile>${project.build.directory}/jacoco.exec</dataFile>
+                            <!-- output sia nella cartella `target/site/jacoco` (default Sonar) sia in `target/jacoco-report` per compatibilità -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                            <formats>
+                                <format>XML</format>
+                                <format>HTML</format>
+                            </formats>
+                            <!-- Esclude i benchmark/jmh dalla reportistica di JaCoCo -->
+                            <excludes>
+                                <!-- exclude class files generated under any 'benchmarks' package -->
+                                <exclude>**/benchmarks/**</exclude>
+                                <!-- exclude any class with Benchmark in the name -->
+                                <exclude>**/*Benchmark*.class</exclude>
+                                <!-- exclude jmh source folder classes if compiled under jmh package -->
+                                <exclude>**/jmh/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Aggiunto plugin per eseguire test JMeter -->
+            <plugin>
+                <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <!-- Execution che crea il file di configurazione necessario (config.json) -->
+                    <execution>
+                        <id>configuration</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>configure</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jmeter-tests</id>
+                        <!-- Il goal 'jmeter' va legato alla fase integration-test -->
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>jmeter</goal>
+                        </goals>
+                        <configuration>
+                            <!-- cartella dove mettere i .jmx (committare i .jmx in VCS sotto src/test/jmeter) -->
+                            <testFilesDirectory>src/test/jmeter</testFilesDirectory>
+                            <resultsDirectory>${project.build.directory}/jmeter-results</resultsDirectory>
+                            <!-- abilita la generazione dei report HTML da parte di JMeter dopo l'esecuzione -->
+                            <generateReports>true</generateReports>
+                            <reportDirectory>${project.build.directory}/jmeter-reports</reportDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>jmeter-results</id>
+                        <!-- Analizza i risultati e decide l'esito del build -->
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>results</goal>
+                        </goals>
+                        <configuration>
+                            <resultsDirectory>${project.build.directory}/jmeter-results</resultsDirectory>
+                            <reportDirectory>${project.build.directory}/jmeter-reports</reportDirectory>
+                            <!-- Abilita la scansione dei risultati per richieste fallite -->
+                            <scanResultsForFailedRequests>true</scanResultsForFailedRequests>
+                            <scanResultsForSuccessfulRequests>true</scanResultsForSuccessfulRequests>
+                            <!-- Se ci sono richieste fallite, il build fallisce (ignoreResultFailures=false) -->
+                            <ignoreResultFailures>false</ignoreResultFailures>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- configurazione globale del plugin (valori di default sovrascritti nelle singole execution) -->
+                    <testFilesDirectory>src/test/jmeter</testFilesDirectory>
+                    <resultsDirectory>${project.build.directory}/jmeter-results</resultsDirectory>
+                    <reportDirectory>${project.build.directory}/jmeter-reports</reportDirectory>
+                    <jmeterVersion>5.5</jmeterVersion>
+                    <downloadJMeterDependencies>true</downloadJMeterDependencies>
                 </configuration>
             </plugin>
         </plugins>

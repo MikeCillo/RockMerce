@@ -13,23 +13,25 @@
 
 /* MODALITÀ ALTO CONTRASTO (Si attiva col tasto) */
 body.high-contrast {
-    /* Sfondo nero assoluto e testo giallo */
+    /* --- VARIABILI CSS (Blocco 1 originale) --- */
     --btn-bg: #000000;
     --btn-text: #FFFF00;       /* Giallo puro */
     --accent-color: #00FFFF;   /* Ciano acceso per l'hover (si vede bene sul nero) */
     --dropdown-bg: #000000;
     --dropdown-text: #FFFF00;
+    --btn-border: 2px solid #FFFF00; /* Bordo giallo per visibilità */
 
-    /* Aggiungiamo un bordo giallo, altrimenti un bottone nero su sfondo nero non si vede! */
-    --btn-border: 2px solid #FFFF00;
-}
-
-/* REGOLE SPECIALI PER ALTO CONTRASTO */
-body.high-contrast {
+    /* --- REGOLE CSS DIRETTTE (Blocco 2 originale, spostato qui) --- */
     /* Importante: nasconde l'immagine di sfondo "BrownBackground" per massima leggibilità */
     background-image: none !important;
     background-color: #000000 !important;
+    color: #fff !important;
+
+    /* Regole aggiunte nel tuo ultimo tentativo, spostate qui */
+    color: #ffff00 !important;
+    text-decoration: underline;
 }
+
 
 /* Stile del bottone che cambierà il contrasto (creato via JS) */
 #btn-contrasto {
@@ -73,17 +75,6 @@ body.high-contrast {
     transform: scale(1.05); /* Effetto ingrandimento al passaggio del mouse */
 }
 
-/* --- LOGICA ALTO CONTRASTO (Cosa succede quando clicchi) --- */
-body.high-contrast {
-    background-color: #000 !important;
-    color: #fff !important;
-}
-
-/* Rende tutti i link gialli per massima visibilità */
-body.high-contrast a {
-    color: #ffff00 !important;
-    text-decoration: underline;
-}
 
 /* Adatta input e bottoni del sito */
 body.high-contrast button,

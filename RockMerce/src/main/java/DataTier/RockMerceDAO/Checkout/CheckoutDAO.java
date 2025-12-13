@@ -5,6 +5,7 @@ import DataTier.DBCONNECTION.DbConnection;
 import DataTier.RockMerceDAO.CheckoutContent.CheckoutContentDAO;
 import DataTier.RockMerceDAO.Customer.CustomerDAO;
 import LogicTier.Entità.Checkout;
+import LogicTier.exception.CheckoutException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class CheckoutDAO {
             ps.setInt(4, cartId);
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("FAILED CHECKOUT CREATION: Zero rows affected by insert.");
+                throw new CheckoutException("FAILED CHECKOUT CREATION: Zero rows affected by insert.");
             }
 
             // Incluso ResultSet nel try-with-resources
@@ -32,12 +33,12 @@ public class CheckoutDAO {
                 if (rs.next()) {
                     return rs.getInt(1);
                 } else {
-                    throw new RuntimeException("FAILED CHECKOUT CREATION: Database did not return the generated key.");
+                    throw new CheckoutException("FAILED CHECKOUT CREATION: Database did not return the generated key.");
                 }
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error during new checkout creation for Cart ID: " + cartId, e);
+            throw new CheckoutException("Database error during new checkout creation for Cart ID: " + cartId);
         }
     }
 
@@ -53,11 +54,11 @@ public class CheckoutDAO {
             ps.setInt(2, checkoutId);
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("Checkout update failed for ID: " + checkoutId + ". 0 rows affected.");
+                throw new CheckoutException("Checkout update failed for ID: " + checkoutId + ". 0 rows affected.");
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error during checkout update for ID: " + checkoutId, e);
+            throw new CheckoutException("Database error during checkout update for ID: " + checkoutId);
         }
     }
 
@@ -91,7 +92,7 @@ public class CheckoutDAO {
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error retrieving checkouts for Cart ID: " + cartId, e);
+            throw new CheckoutException("Database error retrieving checkouts for Cart ID: " + cartId);
         }
     }
 
@@ -129,7 +130,7 @@ public class CheckoutDAO {
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error retrieving all orders.", e);
+            throw new CheckoutException("Database error retrieving all orders.");
         }
     }
 
@@ -145,7 +146,7 @@ public class CheckoutDAO {
 
             try (final ResultSet rs = ps.executeQuery()) {
 
-                double earnings = 0.00; // La variabile locale deve rimanere non final perché viene riassegnata (earnings += ...)
+                double earnings = 0.00; // La variabile locale deve rimanere non final!!
 
                 while (rs.next()) {
                     earnings += rs.getDouble(1);
@@ -155,7 +156,7 @@ public class CheckoutDAO {
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error retrieving total earnings.", e);
+            throw new CheckoutException("Database error retrieving total earnings.");
         }
     }
 

@@ -2,6 +2,7 @@ package DataTier.RockMerceDAO.Cart;
 
 import DataTier.DBCONNECTION.DbConnection;
 import LogicTier.Entità.Cart;
+import LogicTier.exception.CartException;
 
 import java.sql.*;
 
@@ -18,7 +19,7 @@ public class CartDAO {
             ps.setInt(2, 0);
 
             if (ps.executeUpdate() != 1) {
-                throw new Exception("CART CREATION FAILED: Zero or multiple rows affected by insert.");
+                throw new CartException("CART CREATION FAILED: Zero or multiple rows affected by insert.");
             }
 
             // Recupera la chiave generata
@@ -26,12 +27,12 @@ public class CartDAO {
                 if (rs.next()) {
                     return rs.getInt(1); // Ritorna l'ID del carrello
                 } else {
-                    throw new Exception("CART CREATION FAILED: Database did not return the generated key.");
+                    throw new CartException("CART CREATION FAILED: Database did not return the generated key.");
                 }
             }
 
         } catch (final Exception e) {
-            throw new RuntimeException("Database error during cart creation.", e);
+            throw new CartException("Database error during cart creation.");
         }
     }
 
@@ -50,7 +51,7 @@ public class CartDAO {
             ps.executeUpdate();
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error during cart update for ID: " + cart.getId(), e);
+            throw new CartException("Database error during cart update for ID: " + cart.getId());
         }
     }
 
@@ -75,7 +76,7 @@ public class CartDAO {
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error retrieving cart for ID: " + idCart, e);
+            throw new CartException("Database error retrieving cart for ID: " + idCart);
         }
     }
 }

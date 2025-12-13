@@ -73,7 +73,6 @@ input:focus{
     font-family: Helvetica;
     background-color: transparent;
     border:2px solid #c6ac8f;
-    /*transition: font-size 0.8s,width 0.8s,border 0.8s;*/
 }
 
 #invia:hover{
@@ -81,7 +80,7 @@ input:focus{
     font-size: 28px;
     border: 2px solid #c6ac8f;
     color: #c6ac8f;
-    /*transition: font-size 0.8s,width 0.8s,border 0.8s,color 0.8s; */
+
 }
 
 
@@ -95,7 +94,7 @@ input:focus{
     font-family: Helvetica;
     background-color: transparent;
     border:2px solid #c6ac8f;
-    /*transition: font-size 0.8s,width 0.8s,border 0.8s;*/
+
 }
 
 #SignUp:hover{
@@ -103,24 +102,24 @@ input:focus{
     font-size: 28px;
     border: 2px solid #c6ac8f;
     color: #c6ac8f;
-    /*transition: font-size 0.8s,width 0.8s,border 0.8s,color 0.8s;*/
+
 }
 
-/* Stile per il logo "Torna alla Home" */
+
 .logo-home-link {
-    position: absolute; /* Lo fissa in un punto preciso */
-    top: 20px;          /* Distanza dall'alto */
-    left: 20px;         /* Distanza da sinistra */
-    z-index: 10;        /* Assicura che stia sopra lo sfondo */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
 }
 
 .logo-home-link img {
-    width: 80px;        /* Cambia questo numero per ingrandire/rimpicciolire */
-    height: auto;       /* Mantiene le proporzioni */
+    width: 80px;
+    height: auto;
     transition: transform 0.3s ease;
 }
 
-/* Effetto quando passi sopra col mouse */
+
 .logo-home-link img:hover {
-    transform: scale(1.1); /* Leggero zoom */
+    transform: scale(1.1);
 }

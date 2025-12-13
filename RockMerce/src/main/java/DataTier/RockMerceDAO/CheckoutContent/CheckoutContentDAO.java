@@ -2,6 +2,7 @@ package DataTier.RockMerceDAO.CheckoutContent;
 
 import DataTier.DBCONNECTION.DbConnection;
 import LogicTier.Entità.Guitar;
+import LogicTier.exception.CheckoutContentException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,34 +34,35 @@ public class CheckoutContentDAO {
             }
 
         } catch (final SQLException e) {
-            throw new RuntimeException("Database error retrieving checkout content for ID: " + checkoutId, e);
+            throw new CheckoutContentException("Database error retrieving checkout content for ID: " + checkoutId);
         }
     }
 
 
-    public void addToCheckoutContent(int idCheckout,Guitar guitar) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO CheckoutContent (name,quantity,price,producer,category,color,idCheckout) VALUES(?,?,?,?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
+    public void addToCheckoutContent(int idCheckout, Guitar guitar) {
 
 
-            ps.setString(1,guitar.getName());
-            ps.setInt(2,guitar.getDisponibility());
-            ps.setDouble(3,guitar.getPrice());
-            ps.setString(4,guitar.getProducer());
-            ps.setString(5,guitar.getCategory());
-            ps.setString(6,guitar.getColor());
-            ps.setInt(7,idCheckout);
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(
+                     "INSERT INTO CheckoutContent (name,quantity,price,producer,category,color,idCheckout) VALUES(?,?,?,?,?,?,?)",
+                     Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, guitar.getName());
+            ps.setInt(2, guitar.getDisponibility());
+            ps.setDouble(3, guitar.getPrice());
+            ps.setString(4, guitar.getProducer());
+            ps.setString(5, guitar.getCategory());
+            ps.setString(6, guitar.getColor());
+            ps.setInt(7, idCheckout);
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("GUITAR CANNOT BE ADDED TO CHECKOUT CONTENT");
+                throw new CheckoutContentException("GUITAR CANNOT BE ADDED TO CHECKOUT CONTENT");
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            // La Connection e il PreparedStatement vengono chiusi qui, risolvendo il code smell.
+            throw new CheckoutContentException("Database error adding guitar to checkout content.");
         }
-
     }
 
 }

@@ -115,7 +115,6 @@ input:focus{                                     /* CLICKED INPUT INSIDE LI  */
     font-family: Helvetica;
     visibility: hidden;
     font-size: 28px;
-    /*text-shadow: -4px 0 #c6ac8f; */
     color: #c6ac8f;
 }
 
