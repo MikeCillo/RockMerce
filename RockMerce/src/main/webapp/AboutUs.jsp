@@ -145,6 +145,12 @@
     </div>
 
 </div>
+<br><br>
+<footer class="site-footer">
+    <div id="ecoindex-badge"></div>
+</footer>
+<script src="https://cdn.jsdelivr.net/gh/cnumr/ecoindex_badge@3/assets/js/ecoindex-badge.js" defer></script>
+
 
 <script src="./Scripts/accessibilita.js"></script>
 
