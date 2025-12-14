@@ -30,7 +30,7 @@ public class CartContentIntegrationTest {
 
         CartContentDAO dao = new CartContentDAO();
         Guitar g = new Guitar(); g.setId(1); g.setPrice(120.0); g.setDisponibility(1);
-        dao.insertIntoCartContent(cartId, g);
+        dao.insertIntoCartContent(cartId, g,null);
 
         ArrayList<Guitar> content = dao.getCartContent(cartId);
         assertNotNull(content);

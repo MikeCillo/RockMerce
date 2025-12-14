@@ -10,15 +10,42 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CartContentDAO {
-    public void insertIntoCartContent(final int cartId, final Guitar guitar) { // Aggiunto 'final'
 
 
-        final String selectSql = "SELECT quantity, price FROM CartContent WHERE cart=? AND id=?";
+    public void insertIntoCartContent(final int cartId, final Guitar guitar, final Connection con) throws SQLException {
+
+        // If caller passed null, open a connection and delegate (backward-compatibility for tests)
+        if (con == null) {
+            try (final Connection newCon = DbConnection.getConnection()) {
+                try {
+                    newCon.setAutoCommit(false);
+                    insertIntoCartContent(cartId, guitar, newCon); // delegate with real connection
+                    newCon.commit();
+                } catch (SQLException e) {
+                    try {
+                        newCon.rollback();
+                    } catch (SQLException ex) {
+                        // ignore rollback failure
+                    }
+                    throw new CartContentException("Database error during insert/update into CartContent.", e);
+                }
+            } catch (SQLException e) {
+                throw new CartContentException("Database error obtaining connection for CartContent insert.", e);
+            }
+            return;
+        }
+
+        // 1. Aggiunto FOR UPDATE per bloccare la riga del DB (CORRETTO)
+        final String selectSql = "SELECT quantity, price FROM CartContent WHERE cart=? AND id=? FOR UPDATE";
         final String updateSql = "UPDATE CartContent SET quantity=?, price=? WHERE cart=? AND id=?";
         final String insertSql = "INSERT INTO CartContent (cart, id, quantity, price) VALUES (?, ?, ?, ?)";
 
-        try (final Connection con = DbConnection.getConnection();
-             final PreparedStatement psSelect = con.prepareStatement(selectSql)) {
+        // Rimuoviamo: Connection con = null;
+        // Rimuoviamo: con = DbConnection.getConnection();
+        // Rimuoviamo: con.setAutoCommit(false);
+
+        // Usiamo la connessione 'con' che ci arriva dal Service
+        try (final PreparedStatement psSelect = con.prepareStatement(selectSql)) {
 
             psSelect.setInt(1, cartId);
             psSelect.setInt(2, guitar.getId());
@@ -26,8 +53,10 @@ public class CartContentDAO {
             try (final ResultSet rs = psSelect.executeQuery()) {
 
                 if (rs.next()) {
+                    // Logica di UPDATE
                     final int newQuantity = 1 + rs.getInt(1);
-                    final double newPrice = guitar.getPrice() + rs.getDouble(2);
+                    // Nota: Calcolo del prezzo totale corretto per il DB
+                    final double newPrice = rs.getDouble(2) + guitar.getPrice();
 
                     try (final PreparedStatement psUpdate = con.prepareStatement(updateSql)) {
                         psUpdate.setInt(1, newQuantity);
@@ -38,7 +67,7 @@ public class CartContentDAO {
                     }
 
                 } else {
-
+                    // Logica di INSERT
                     try (final PreparedStatement psInsert = con.prepareStatement(insertSql)) {
                         psInsert.setInt(1, cartId);
                         psInsert.setInt(2, guitar.getId());
@@ -49,8 +78,32 @@ public class CartContentDAO {
                 }
             }
 
+            // Rimuoviamo: con.commit();
+
+            // Rimuoviamo il blocco catch/finally che gestiva rollback e chiusura
         } catch (final SQLException e) {
-            throw new CartContentException("Database error during insert/update into CartContent.");
+            // Lanciamo l'eccezione, il Service gestirà il rollback
+            throw e;
+        }
+    }
+
+    // Backward-compatible overload: opens its own Connection and delegates to the three-arg variant.
+    public void insertIntoCartContent(final int cartId, final Guitar guitar) {
+        try (final Connection con = DbConnection.getConnection()) {
+            try {
+                con.setAutoCommit(false);
+                insertIntoCartContent(cartId, guitar, con);
+                con.commit();
+            } catch (SQLException e) {
+                try {
+                    con.rollback();
+                } catch (SQLException ex) {
+                    // ignore rollback failure
+                }
+                throw new CartContentException("Database error during insert/update into CartContent.", e);
+            }
+        } catch (SQLException e) {
+            throw new CartContentException("Database error obtaining connection for CartContent insert.", e);
         }
     }
 
@@ -93,7 +146,7 @@ public class CartContentDAO {
                         cart.setTempTotal(cart.getTempTotal() - unitPrice);
                         cart.setNumGuitars(cart.getNumGuitars() - quantity);
 
-                        cartDAO.upDateCart(cart);
+                        cartDAO.upDateCart(cart,con);
                     }
                 }
             }
@@ -147,8 +200,4 @@ public class CartContentDAO {
         }
     }
 }
-
-
-
-
 

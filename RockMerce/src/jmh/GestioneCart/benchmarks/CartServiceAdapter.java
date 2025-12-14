@@ -1,11 +1,15 @@
 package GestioneCart.benchmarks;
 
+import DataTier.DBCONNECTION.DbConnection;
 import DataTier.RockMerceDAO.Cart.CartDAO;
 import DataTier.RockMerceDAO.CartContent.CartContentDAO;
 import LogicTier.Entità.Cart;
 import LogicTier.Entità.Customer;
 import LogicTier.Entità.Guitar;
 import LogicTier.GestioneCart.CartService;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -29,7 +33,7 @@ public class CartServiceAdapter extends CartService {
     }
 
     @Override
-    public Cart removeGuitarFromCart(final Customer customer,final int id) {
+    public Cart removeGuitarFromCart(final Customer customer,final int id) throws SQLException {
 
        final Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
 
@@ -38,7 +42,7 @@ public class CartServiceAdapter extends CartService {
             cart.setGuitars(guitars);
             Guitar guitar = cart.removeGuitar(id);
             // aggiorna comunque il carrello
-            this.mockCartDAO.upDateCart(cart);
+            this.mockCartDAO.upDateCart(cart,null);
 
             // se la rimozione ha trovato una chitarra, sincronizza il contenuto del DB mock
             if (guitar != null) {
@@ -49,28 +53,32 @@ public class CartServiceAdapter extends CartService {
     }
 
     @Override
-    public Cart freeCart(final Customer customer) {
+    public Cart freeCart(final Customer customer) throws SQLException {
 
         final Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
         final ArrayList<Guitar> guitarsCartContent = this.mockCartContentDAO.getCartContent(cart.getId());
 
         if (cart.getNumGuitars() >= 1) {
+            Connection con = null;
+            con = DbConnection.getConnection();
+            con.setAutoCommit(false); // Inizio Transazione
             this.mockCartContentDAO.removeGuitarsFromCartContent(guitarsCartContent, cart.getId());
             cart.getGuitars().clear();
             cart.setTempTotal(0);
             cart.setNumGuitars(0);
-            this.mockCartDAO.upDateCart(cart);
+            this.mockCartDAO.upDateCart(cart,con);
         }
         return cart;
     }
 
 
     @Override
-    public void addGuitarToCart(final Customer customer,final Guitar guitar){
+    public void addGuitarToCart(final Customer customer,final Guitar guitar) throws SQLException {
+
         final Cart cart = this.mockCartDAO.getCartFromDB(customer.getCart().getId());
         cart.addGuitar(guitar);
-        this.mockCartDAO.upDateCart(cart);
-        this.mockCartContentDAO.insertIntoCartContent(customer.getCart().getId(),guitar);
+        this.mockCartDAO.upDateCart(cart,null);
+        this.mockCartContentDAO.insertIntoCartContent(customer.getCart().getId(),guitar,null);
     }
 
 }

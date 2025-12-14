@@ -65,7 +65,7 @@ class CartContentDAOTest {
         injectDataSource(ds);
         CartContentDAO dao = new CartContentDAO();
         Guitar g = new Guitar(); g.setId(3); g.setPrice(5.0);
-        dao.insertIntoCartContent(1, g);
+        dao.insertIntoCartContent(1, g,con);
 
         verify(psUpdate, times(1)).executeUpdate();
 
@@ -75,7 +75,7 @@ class CartContentDAOTest {
         when(con.prepareStatement(contains("INSERT INTO CartContent"))).thenReturn(psInsert);
         when(psInsert.executeUpdate()).thenReturn(1);
 
-        dao.insertIntoCartContent(1, g);
+        dao.insertIntoCartContent(1, g,con);
 
         verify(psInsert, times(1)).executeUpdate();
     }

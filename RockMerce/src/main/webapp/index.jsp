@@ -85,7 +85,7 @@
 
     <form action="CatalogoElectricControl">
         <button class="clean-btn guitar-card" id="CatalogoElectricBUTTON">
-            <img src="Images/Elettrica.png" alt="">
+            <img src="Images/elettrica.png" alt="">
             <span class="card-title">ELECTRIC</span>
         </button>
     </form>

@@ -109,7 +109,7 @@
         <td>${guitar.producer}</td>
         <td>${guitar.color}</td>
         <td>${guitar.category}</td>
-        <td>${guitar.disponibility}</td>
+        <td>${cart.numGuitars}</td>
         <td>€ ${guitar.price}0</td>
 
             <td id="btnRemove">

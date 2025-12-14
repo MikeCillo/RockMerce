@@ -1,5 +1,6 @@
 package LogicTier.GestioneCart;
 
+import DataTier.DBCONNECTION.DbConnection;
 import DataTier.RockMerceDAO.Cart.CartDAO;
 import DataTier.RockMerceDAO.CartContent.CartContentDAO;
 import DataTier.RockMerceDAO.Checkout.CheckoutDAO;
@@ -10,11 +11,13 @@ import LogicTier.Entità.Checkout;
 import LogicTier.Entità.Customer;
 import LogicTier.Entità.Guitar;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CheckOutService implements CheckOutInterface{
     @Override
-    public Checkout confirmCheckOut(Customer customer) {
+    public Checkout confirmCheckOut(Customer customer) throws SQLException {
         //RETRIEVE CUSTOMER'S CART
         CartDAO cartDAO = new CartDAO();
         Cart cart = cartDAO.getCartFromDB(customer.getCart().getId());
@@ -70,10 +73,16 @@ public class CheckOutService implements CheckOutInterface{
             checkoutDAO.updateCheckout(checkout.getTotalPrice(), checkout.getId());
 
 
+
             // FREE CART
             cart.setTempTotal(0.00);
             cart.setNumGuitars(0);
-            cartDAO.upDateCart(cart);
+
+            Connection con = null;
+            con = DbConnection.getConnection();
+            con.setAutoCommit(false);
+
+            cartDAO.upDateCart(cart,con);
 
 
             //PASS CHECKOUT

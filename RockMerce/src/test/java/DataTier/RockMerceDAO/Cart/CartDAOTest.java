@@ -131,7 +131,7 @@ import static org.mockito.Mockito.*;
         c.setNumGuitars(1);
 
         // should not throw
-        dao.upDateCart(c);
+        dao.upDateCart(c,con);
         verify(ps, atLeastOnce()).executeUpdate();
     }
 }

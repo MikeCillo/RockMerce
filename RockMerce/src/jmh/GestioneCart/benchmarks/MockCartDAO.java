@@ -20,7 +20,8 @@ public class MockCartDAO extends CartDAO {
 
     // Simula l'aggiornamento del carrello nel DB (non fa nulla)
     @Override
-    public void upDateCart(final Cart cart){
+    public void upDateCart(final Cart cart, final java.sql.Connection con) {
+        // Non fa nulla, è un mock
     }
 
     // Simula la creazione del carrello

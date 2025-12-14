@@ -20,9 +20,16 @@ public class MockCartContentDAO extends CartContentDAO {
         return guitars;
     }
 
-    // Simula l'inserimento nel DB
+    // Simula l'inserimento nel DB — NO-OP per i benchmark (evita accesso al DB reale)
     @Override
     public void insertIntoCartContent(final int cartId, final Guitar guitar) {
+        // intentionally no-op for benchmarks
+    }
+
+    // Overload with connection: NO-OP
+    @Override
+    public void insertIntoCartContent(final int cartId, final Guitar guitar, final java.sql.Connection con) {
+        // intentionally no-op for benchmarks
     }
 
     // Simula la rimozione di una chitarra specifica

@@ -36,7 +36,7 @@ public class CartDAO {
         }
     }
 
-
+/*
     public void upDateCart(final Cart cart){
 
         final String updateSql = "UPDATE Cart SET tempTotal=?, numGuitars=? WHERE id=?";
@@ -52,6 +52,29 @@ public class CartDAO {
 
         } catch (final SQLException e) {
             throw new CartException("Database error during cart update for ID: " + cart.getId());
+        }
+    }*/
+
+
+    // CartDAO.java
+// Il metodo ora accetta una connessione esistente
+    public void upDateCart(final Cart cart, final Connection con) throws SQLException {
+
+        final String updateSql = "UPDATE Cart SET tempTotal=?, numGuitars=? WHERE id=?";
+
+        // Rimuovi il try-with-resources (e la chiusura)
+        // Usa la connessione fornita
+        try (final PreparedStatement ps = con.prepareStatement(updateSql)) {
+
+            ps.setDouble(1, cart.getTempTotal());
+            ps.setInt(2, cart.getNumGuitars());
+            ps.setInt(3, cart.getId());
+
+            ps.executeUpdate();
+
+        } catch (final SQLException e) {
+            // Non lanciamo qui l'eccezione, ma la lasciamo salire
+            throw e; // L'errore verrà gestito dal blocco catch del Service
         }
     }
 

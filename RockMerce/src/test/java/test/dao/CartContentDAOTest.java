@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import test.utils.TestDatabaseUtil;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +27,7 @@ class CartContentDAOTest {
     }
 
     @Test
-    void testInsertAndGetAndRemove() {
+    void testInsertAndGetAndRemove() throws SQLException {
         CartDAO cartDAO = new CartDAO();
         int cartId = cartDAO.createCart();
 
@@ -48,7 +49,7 @@ class CartContentDAOTest {
         assertNotNull(stored);
 
         CartContentDAO cartContentDAO = new CartContentDAO();
-        cartContentDAO.insertIntoCartContent(cartId, stored);
+        cartContentDAO.insertIntoCartContent(cartId, stored,null);
 
         ArrayList<Guitar> content = cartContentDAO.getCartContent(cartId);
         assertNotNull(content);

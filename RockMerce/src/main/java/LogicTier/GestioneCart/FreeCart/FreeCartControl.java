@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(value = "/FreeCartControl")
@@ -29,7 +30,12 @@ public class FreeCartControl extends HttpServlet {
 
         if (customer != null) {
             CartService cartService =new CartService();
-            Cart cart= cartService.freeCart(customer);
+            Cart cart= null;
+            try {
+                cart = cartService.freeCart(customer);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             request.setAttribute("guitars", cart.getGuitars());
             request.setAttribute("cart", cart);
