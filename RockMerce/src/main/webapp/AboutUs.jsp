@@ -94,6 +94,78 @@
     .contact-value:hover {
         border-bottom: 2px solid #c6ac8f;
     }
+    /* --- NUOVA SEZIONE SOSTENIBILITÀ --- */
+    .sustainability-section {
+        margin-bottom: 60px;
+        width: 100%;
+        max-width: 1000px;
+        border-top: 1px solid #c6ac8f; /* Linea sottile per separare */
+        border-bottom: 1px solid #c6ac8f;
+        padding: 40px 0;
+    }
+
+    .sust-title {
+        font-family: "Phosphate", sans-serif;
+        font-size: 32px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 3px;
+    }
+
+    .sust-subtitle {
+        font-size: 16px;
+        font-style: italic;
+        margin-bottom: 40px;
+        opacity: 0.8;
+    }
+
+    .sust-grid {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .sust-card {
+        flex: 1;
+        min-width: 250px;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .sust-card i {
+        font-size: 40px;
+        margin-bottom: 15px;
+        color: #c6ac8f;
+    }
+
+    .sust-card h3 {
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+    }
+
+    .sust-card p {
+        font-size: 16px;
+        line-height: 1.4;
+        font-weight: 300;
+        color: #e0d0c0;
+    }
+
+    /* Aggiornamento Alto Contrasto per la nuova sezione */
+    body.high-contrast .sust-title,
+    body.high-contrast .sust-card h3,
+    body.high-contrast .sust-card i {
+        color: #ffffff !important;
+    }
+    body.high-contrast .sust-card p,
+    body.high-contrast .sust-subtitle {
+        color: #ffff00 !important;
+    }
+    body.high-contrast .sustainability-section {
+        border-color: #ffffff !important;
+    }
 
     /* --- GESTIONE ALTO CONTRASTO --- */
     /* Se l'utente attiva l'accessibilità, tutto diventa leggibile al massimo */
@@ -120,6 +192,33 @@
             Selezioniamo solo i migliori strumenti per garantire che il tuo suono sia esattamente come lo hai immaginato.
             Passione, qualità e supporto continuo: questo è il nostro credo.
         </p>
+    </div>
+
+    <div class="sustainability-section">
+        <h2 class="sust-title">Our Green Vision</h2>
+        <p class="sust-subtitle">Ambiente • Società • Economia</p>
+
+        <div class="sust-grid">
+
+            <div class="sust-card">
+                <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+                <h3>Low Carbon Impact</h3>
+                <p>Collaboriamo con brand che riducono la Carbon Footprint e utilizziamo materiali certificati.</p>
+            </div>
+
+            <div class="sust-card">
+                <i class="fa-solid fa-handshake-simple" aria-hidden="true"></i>
+                <h3>Filiera Etica</h3>
+                <p>Trasparenza totale sui fornitori per garantire il rispetto dei diritti dei lavoratori.</p>
+            </div>
+
+            <div class="sust-card">
+                <i class="fa-solid fa-recycle" aria-hidden="true"></i>
+                <h3>Re-Commerce</h3>
+                <p>Il nostro programma di ricondizionamento dà una seconda vita agli strumenti usati.</p>
+            </div>
+
+        </div>
     </div>
 
     <div class="contact-grid">
