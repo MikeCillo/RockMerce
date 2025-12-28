@@ -18,7 +18,7 @@
         <form action="AboutUs-servlet">
             <button id="aboutUs" class="btnR">
                 <i class="fa fa-microphone" style="font-size:20px"></i>
-                <span>ABOUT US</span>
+                <span>SUPPORT</span>
             </button>
         </form>
     </li>
