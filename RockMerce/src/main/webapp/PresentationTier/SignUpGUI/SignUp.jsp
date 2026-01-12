@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>${newUser}-SingUp-RockMerce</title>
+    <link rel="stylesheet" type="text/css" href="./Styles/global.css">
     <link rel="stylesheet" type="text/css" href="./Styles/SingUpStyle.css">
 </head>
 
@@ -15,18 +16,14 @@
 
 <body>
 
-
-
+<form action="BackHomepage-servlet" method="get" class="home-logo-form">
+    <button type="submit" class="clean-button" aria-label="Torna alla Homepage">
+        <img src="<%= request.getContextPath() %>/Images/LogoRmWhite.png" alt="Torna alla Home">
+    </button>
+</form>
 
 <ul id="signUpUl">
 
-<li class="Field">
-    <form action="BackHomepage-servlet">                                    <!--LOGO ONCLICK BACK HOMEPAGE-->
-        <button id="home">
-            <img id="logo" src="Images/logo.png" width="250" height="250">
-        </button>
-    </form>
-</li>
 
 <form id="SignUpForm" action="SignUpControl" method="post" onsubmit="return SignUpJsValidation()">                   <!--ON BTN CLICK NEXT SERVLET-->
         <li class="Field">
@@ -41,6 +38,17 @@
              <input type="text" id="surname" name="surname"  value="${customer.surname}" onchange="valSurname()" required>  <!--INPUT SURNAME-->
             <span class="err" id="errSurname"></span>                                 <!--ERROR SURNAME-->
         </li>
+
+    <li class="Field">
+        <label for="sesso">Sesso:</label>
+        <select id="sesso" name="sesso" required>
+            <option value="" disabled selected>-- Seleziona --</option>
+            <option value="Uomo" ${customer.sesso == 'Uomo' ? 'selected' : ''}>Uomo</option>
+            <option value="Donna" ${customer.sesso == 'Donna' ? 'selected' : ''}>Donna</option>
+            <option value="Non Specificato" ${customer.sesso == 'Non Specificato' ? 'selected' : ''}>Preferisco non specificarlo</option>
+        </select>
+        <span class="err" id="errSesso"></span>
+    </li>
 
         <li class="Field">
              <label for="username">Username:</label>
@@ -148,6 +156,6 @@
 
 <script src="Scripts/SignUpJS/SignUpValidationJS.js"></script>
 
-
+<script src="./Scripts/accessibilita.js"></script>
 </body>
 </html>

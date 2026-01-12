@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(value = "/AddGuitarToCartControl")
 public class AddGuitarToCartControl extends HttpServlet {
@@ -45,7 +46,11 @@ public class AddGuitarToCartControl extends HttpServlet {
         //LOGGED CUSTOMER
         if(customer !=null) {
             CartService cartService =new CartService();
-            cartService.addGuitarToCart(customer,guitar);
+            try {
+                cartService.addGuitarToCart(customer,guitar);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
 

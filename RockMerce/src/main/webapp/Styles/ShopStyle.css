@@ -31,7 +31,7 @@ ul{
 
 .card {
     box-shadow: 0 14px 20px 0 black;
-    background-color: white;
+    background-color: #eae0d5;
     width: 300px;
     height: 450px;
     text-align: center;
@@ -78,8 +78,23 @@ ul{
 
 
 #backCard .card:hover {
-    background-color: #FFC12C;
+    background-color: #c6ac8f;
     font-size: 20px;
     transition: font-size 0.5s,background-color 0.5s;
 }
 
+/* --- FIX ALTO CONTRASTO PER LE CARD (Versione Dark) --- */
+body.high-contrast .card {
+    background-color: #000000 !important; /* Card Nera */
+    color: #ffffff !important;            /* Testo Bianco */
+    border: 2px solid #ffffff !important; /* Bordo Bianco ben visibile */
+    box-shadow: none !important;          /* Rimuove l'ombra che sul nero non si vede */
+}
+
+/* Gestisce il bottone interno per farlo risaltare */
+body.high-contrast .InsideButton {
+    background-color: #ffffff !important; /* Bottone Bianco */
+    color: #000000 !important;            /* Testo Nero */
+    border: 2px solid #ffffff !important;
+    font-weight: bold;
+}

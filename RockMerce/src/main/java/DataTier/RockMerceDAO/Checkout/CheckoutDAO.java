@@ -5,122 +5,158 @@ import DataTier.DBCONNECTION.DbConnection;
 import DataTier.RockMerceDAO.CheckoutContent.CheckoutContentDAO;
 import DataTier.RockMerceDAO.Customer.CustomerDAO;
 import LogicTier.Entità.Checkout;
+import LogicTier.exception.CheckoutException;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CheckoutDAO {
 
-    public int newCheckout(int cartId,String sendDate,String orderDate){
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO Checkout (total,sendDate,orderDate,cartId) VALUES(?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
+    public int newCheckout(final int cartId, final String sendDate, final String orderDate) {
+
+        final String insertSql = "INSERT INTO Checkout (total,sendDate,orderDate,cartId) VALUES(?,?,?,?)";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+
             ps.setDouble(1, 0.00);
             ps.setString(2, sendDate);
             ps.setString(3, orderDate);
             ps.setInt(4, cartId);
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("FAILED CHECKOUT CREATION");
+                throw new CheckoutException("FAILED CHECKOUT CREATION: Zero rows affected by insert.");
             }
 
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            return rs.getInt(1);
+            // Incluso ResultSet nel try-with-resources
+            try (final ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new CheckoutException("FAILED CHECKOUT CREATION: Database did not return the generated key.");
+                }
+            }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
-    public void updateCheckout(double total,int checkoutId){
-
-        try (Connection con = DbConnection.getConnection()) {
-            Statement st = con.createStatement();
-            String query = "update Checkout set  total=" +total + " where id=" + checkoutId + ";";
-            st.executeUpdate(query);
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (final SQLException e) {
+            throw new CheckoutException("Database error during new checkout creation for Cart ID: " + cartId);
         }
     }
 
 
-    public ArrayList<Checkout> retrieveCustomersCheckouts(int cartId) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT id,total,sendDate,orderDate FROM Checkout WHERE cartId=?");
+    public void updateCheckout(final double total, final int checkoutId) {
 
-            ps.setInt(1,cartId);
+        final String updateSql = "UPDATE Checkout SET total=? WHERE id=?";
 
-            ResultSet rs = ps.executeQuery();
-            ArrayList<Checkout> checkouts=new ArrayList<>();
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(updateSql)) {
 
-            CheckoutContentDAO checkoutContentDAO=new CheckoutContentDAO();
-            while (rs.next()) {
-                Checkout checkout=new Checkout();
-                checkout.setId(rs.getInt(1));
-                checkout.setTotalPrice(rs.getDouble(2));
-                checkout.setSendDate(rs.getString(3));
-                checkout.setOrderDate(rs.getString(4));
-                checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getId()));
-                checkouts.add(checkout);
+            ps.setDouble(1, total);
+            ps.setInt(2, checkoutId);
+
+            if (ps.executeUpdate() != 1) {
+                throw new CheckoutException("Checkout update failed for ID: " + checkoutId + ". 0 rows affected.");
             }
-            return checkouts;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (final SQLException e) {
+            throw new CheckoutException("Database error during checkout update for ID: " + checkoutId);
+        }
+    }
+
+
+    public ArrayList<Checkout> retrieveCustomersCheckouts(final int cartId) {
+
+        final String selectSql = "SELECT id,total,sendDate,orderDate FROM Checkout WHERE cartId=?";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(selectSql)) {
+
+            ps.setInt(1, cartId);
+
+            try (final ResultSet rs = ps.executeQuery()) {
+
+                final ArrayList<Checkout> checkouts = new ArrayList<>();
+                final CheckoutContentDAO checkoutContentDAO = new CheckoutContentDAO();
+
+                while (rs.next()) {
+                    final Checkout checkout = new Checkout();
+                    checkout.setId(rs.getInt(1));
+                    checkout.setTotalPrice(rs.getDouble(2));
+                    checkout.setSendDate(rs.getString(3));
+                    checkout.setOrderDate(rs.getString(4));
+                    checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getId()));
+
+                    checkouts.add(checkout);
+                }
+                return checkouts;
+
+            }
+
+        } catch (final SQLException e) {
+            throw new CheckoutException("Database error retrieving checkouts for Cart ID: " + cartId);
         }
     }
 
 
     public ArrayList<Checkout> retrieveOrders() {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT id,total,sendDate,orderDate,cartId FROM Checkout");
+
+        final String selectSql = "SELECT id,total,sendDate,orderDate,cartId FROM Checkout";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(selectSql)) {
+
+            try (final ResultSet rs = ps.executeQuery()) {
+
+                final ArrayList<Checkout> checkouts = new ArrayList<>();
+                final CheckoutContentDAO checkoutContentDAO = new CheckoutContentDAO();
+                final CustomerDAO customerDAO = new CustomerDAO();
+
+                while (rs.next()) {
+                    final Checkout checkout = new Checkout();
+
+                    checkout.setId(rs.getInt(1));
+                    checkout.setTotalPrice(rs.getDouble(2));
+                    checkout.setSendDate(rs.getString(3));
+                    checkout.setOrderDate(rs.getString(4));
+                    checkout.setCartId(rs.getInt(5));
 
 
-            ResultSet rs = ps.executeQuery();
-            ArrayList<Checkout> checkouts=new ArrayList<>();
-            CheckoutContentDAO checkoutContentDAO=new CheckoutContentDAO();
+                    checkout.setCustomer(customerDAO.getCustomerByCart(checkout.getCartId()));
+                    checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getId()));
 
-            CustomerDAO customerDAO =new CustomerDAO();
-            while (rs.next()) {
-                Checkout checkout=new Checkout();
-                checkout.setId(rs.getInt(1));
-                checkout.setTotalPrice(rs.getDouble(2));
-                checkout.setSendDate(rs.getString(3));
-                checkout.setOrderDate(rs.getString(4));
-                checkout.setCartId(rs.getInt(5));
-                checkout.setCustomer(customerDAO.getCustomerByCart(checkout.getCartId()));
-                checkout.setGuitars(checkoutContentDAO.retrieveCheckoutContent(checkout.getId()));
-                checkouts.add(checkout);
+                    checkouts.add(checkout);
+                }
+                return checkouts;
+
             }
-            return checkouts;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (final SQLException e) {
+            throw new CheckoutException("Database error retrieving all orders.");
         }
     }
 
 
     public Double retrieveEarnings() {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT total FROM Checkout ");
+
+        final String selectSql = "SELECT total FROM Checkout";
 
 
-            ResultSet rs = ps.executeQuery();
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(selectSql)) {
 
-            double earnings=0.00;
-            while (rs.next()) {
-              earnings+=rs.getDouble(1);
+
+            try (final ResultSet rs = ps.executeQuery()) {
+
+                double earnings = 0.00; // La variabile locale deve rimanere non final!!
+
+                while (rs.next()) {
+                    earnings += rs.getDouble(1);
+                }
+                return earnings;
+
             }
-            return earnings;
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (final SQLException e) {
+            throw new CheckoutException("Database error retrieving total earnings.");
         }
     }
 

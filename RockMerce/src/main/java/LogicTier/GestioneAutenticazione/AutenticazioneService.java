@@ -4,7 +4,6 @@ import DataTier.RockMerceDAO.Admin.AdminDAO;
 import DataTier.RockMerceDAO.Customer.CustomerDAO;
 import LogicTier.Entità.Admin;
 import LogicTier.Entità.Customer;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,10 +21,10 @@ public class AutenticazioneService implements AutenticazioneInterface {
 
     @Override
     public boolean CheckUsername(String us){
-        CustomerDAO customerDAO=new CustomerDAO();
-        if(customerDAO.doCheckUsername(us)) {
+        // usa l'istanza iniettata (utile per i test che mockano il DAO)
+        if(this.customerDAO != null && this.customerDAO.doCheckUsername(us)) {
             return true;
-        }else {
+        } else {
             return false;
         }
 

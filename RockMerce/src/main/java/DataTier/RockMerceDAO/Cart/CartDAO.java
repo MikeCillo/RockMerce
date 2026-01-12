@@ -2,6 +2,7 @@ package DataTier.RockMerceDAO.Cart;
 
 import DataTier.DBCONNECTION.DbConnection;
 import LogicTier.Entità.Cart;
+import LogicTier.exception.CartException;
 
 import java.sql.*;
 
@@ -9,58 +10,96 @@ public class CartDAO {
 
 
     public int createCart() {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO Cart (tempTotal,numGuitars) VALUES(?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(
+                     "INSERT INTO Cart (tempTotal,numGuitars) VALUES(?,?)",
+                     Statement.RETURN_GENERATED_KEYS)) {
+
             ps.setDouble(1, 0.00);
             ps.setInt(2, 0);
 
             if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("CART CREATION NOT COMPLETED");
+                throw new CartException("CART CREATION FAILED: Zero or multiple rows affected by insert.");
             }
 
-            ResultSet rs = ps.getGeneratedKeys();
-            rs.next();
-            return rs.getInt(1);
+            // Recupera la chiave generata
+            try (final ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Ritorna l'ID del carrello
+                } else {
+                    throw new CartException("CART CREATION FAILED: Database did not return the generated key.");
+                }
+            }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
-    public void upDateCart(Cart cart){
-
-        try (Connection con = DbConnection.getConnection()) {
-            Statement st = con.createStatement();
-            String query = "update Cart set tempTotal='" + cart.getTempTotal() + "', numGuitars=" + cart.getNumGuitars()+ " where id=" + cart.getId() + ";";
-            st.executeUpdate(query);
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (final Exception e) {
+            throw new CartException("Database error during cart creation.");
         }
     }
 
+/*
+    public void upDateCart(final Cart cart){
 
-    public Cart getCartFromDB(int idCart) {
-        try (Connection con = DbConnection.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT id,tempTotal,numGuitars FROM Cart WHERE id=?");
+        final String updateSql = "UPDATE Cart SET tempTotal=?, numGuitars=? WHERE id=?";
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps = con.prepareStatement(updateSql)) {
+
+            ps.setDouble(1, cart.getTempTotal());
+            ps.setInt(2, cart.getNumGuitars());
+            ps.setInt(3, cart.getId());
+
+            ps.executeUpdate();
+
+        } catch (final SQLException e) {
+            throw new CartException("Database error during cart update for ID: " + cart.getId());
+        }
+    }*/
+
+
+    // CartDAO.java
+// Il metodo ora accetta una connessione esistente
+    public void upDateCart(final Cart cart, final Connection con) throws SQLException {
+
+        final String updateSql = "UPDATE Cart SET tempTotal=?, numGuitars=? WHERE id=?";
+
+        // Rimuovi il try-with-resources (e la chiusura)
+        // Usa la connessione fornita
+        try (final PreparedStatement ps = con.prepareStatement(updateSql)) {
+
+            ps.setDouble(1, cart.getTempTotal());
+            ps.setInt(2, cart.getNumGuitars());
+            ps.setInt(3, cart.getId());
+
+            ps.executeUpdate();
+
+        } catch (final SQLException e) {
+            // Non lanciamo qui l'eccezione, ma la lasciamo salire
+            throw e; // L'errore verrà gestito dal blocco catch del Service
+        }
+    }
+
+
+    public Cart getCartFromDB(final int idCart) {
+
+        try (final Connection con = DbConnection.getConnection();
+             final PreparedStatement ps =
+                     con.prepareStatement("SELECT id,tempTotal,numGuitars FROM Cart WHERE id=?")) {
+
             ps.setInt(1, idCart);
-            ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                Cart cart=new Cart();
-                cart.setId(rs.getInt(1));
-                cart.setTempTotal(rs.getDouble(2));
-                cart.setNumGuitars(rs.getInt(3));
-                return cart;
+            try (final ResultSet rs = ps.executeQuery()) { // Incluso ResultSet
+                if (rs.next()) {
+                    final Cart cart = new Cart();
+                    cart.setId(rs.getInt(1));
+                    cart.setTempTotal(rs.getDouble(2));
+                    cart.setNumGuitars(rs.getInt(3));
+                    return cart;
+                }
+                return null;
             }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (final SQLException e) {
+            throw new CartException("Database error retrieving cart for ID: " + idCart);
         }
     }
 }

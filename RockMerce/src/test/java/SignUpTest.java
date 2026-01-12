@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class SignUpTest extends Mockito {
 
     @Test
-    public void TestNameSignUp(){
+     void TestNameSignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
         customer.setName("Aee33");
@@ -43,7 +43,7 @@ public class SignUpTest extends Mockito {
 
 
     @Test
-    public void TestSurnameSignUp(){
+    void TestSurnameSignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
         customer.setName("Mario");
@@ -73,7 +73,7 @@ public class SignUpTest extends Mockito {
 
 
     @Test
-    public void TestUsernameSignUp(){
+    void TestUsernameSignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
 
@@ -103,7 +103,7 @@ public class SignUpTest extends Mockito {
     }
 
     @Test
-    public void TestEmailSignUp(){
+    void TestEmailSignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
 
@@ -132,7 +132,7 @@ public class SignUpTest extends Mockito {
     }
 
     @Test
-    public void TestPasswordSignUp(){
+     void TestPasswordSignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
 
@@ -162,7 +162,7 @@ public class SignUpTest extends Mockito {
     }
 
     @Test
-    public void TestPhoneSignUp(){
+    void TestPhoneSignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
 
@@ -194,7 +194,7 @@ public class SignUpTest extends Mockito {
     }
 
     @Test
-    public void TestCitySignUp(){
+    void TestCitySignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
 
@@ -226,7 +226,7 @@ public class SignUpTest extends Mockito {
 
 
     @Test
-    public void TestCountrySignUp(){
+    void TestCountrySignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
 
@@ -257,7 +257,7 @@ public class SignUpTest extends Mockito {
     }
 
     @Test
-    public void TestAddressSignUp(){
+    void TestAddressSignUp(){
         Customer customer=new Customer();
         CreditCard creditCard=new CreditCard();
 

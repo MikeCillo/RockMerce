@@ -4,6 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="./Styles/LoginStyle.css">
+    <link rel="stylesheet" type="text/css" href="./Styles/global.css">
     <title>RockMerce-Login</title>
 
 
@@ -30,6 +31,11 @@
 </style>
 <body>
 
+<form action="BackHomepage-servlet" method="get" class="home-logo-form">
+    <button type="submit" class="clean-button" aria-label="Torna alla homepage">
+        <img src="<%= request.getContextPath() %>/Images/LogoRmWhite.png" alt="Torna alla Home">
+    </button>
+</form>
 
 <form name="login" action="LogInControl" onsubmit="test()" method="post">
 
@@ -47,7 +53,7 @@
     </div>
 
     <div class="Field">
-        <button id="invia">LOGIN</button><br>       <!--BOUNDARY OBJECT -->
+        <button id="invia">Login</button><br>       <!--BOUNDARY OBJECT -->
     </div>
     </div>
 </form>
@@ -58,6 +64,6 @@
 </form>
 </div>
 
-
+<script src="./Scripts/accessibilita.js"></script>
 </body>
 </html>

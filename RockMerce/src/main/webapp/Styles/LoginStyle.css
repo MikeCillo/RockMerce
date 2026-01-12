@@ -1,5 +1,5 @@
 body{
-    background-image: url("../Images/lampwhite.jpg") ;
+    background-color: #5E503F ;
     background-size: cover;
 }
 
@@ -15,7 +15,7 @@ label{
     display: inline-block;
     width: 280px;
     text-align: left;
-    color: black;
+    color: #c6ac8f;
     font-size: 32px;
     font-family: "Helvetica";
     font-weight: bold;
@@ -28,10 +28,10 @@ input{
     height: 40px;
     font-size: 22px;
     font-family: "Times New Roman";
-    color: black;
+    color: #c6ac8f;
     padding: 15px;
     background-color: transparent;
-    border: 2px black solid;
+    border: 2px #c6ac8f solid;
     transition: color 0.8s, background-color 0.8s,font-size 0.5s,width 0.8s;
 }
 
@@ -39,7 +39,7 @@ input{
 
 label:hover {
     text-shadow: 2px 2px black;
-    color: #FFC12C;
+    color: #eae0d5;
     transition: color 0.8s,background-color 0.8s,text-shadow 0.8s;
 }
 
@@ -48,7 +48,7 @@ input:hover{
     width: 310px;
     color: white;
     background-color: black;
-    border-color: #FFC12C;
+    border-color: #c6ac8f;
     transition: color 0.8s, background-color 0.8s,font-size 0.5s,width 0.8s ;
 }
 
@@ -57,7 +57,7 @@ input:focus{
     width: 310px;
     color: white;
     background-color: black;
-    border-color: #FFC12C;
+    border-color: #c6ac8f;
     transition: color 0.8s, font-size 0.5s,background-color 0.8s ;
 }
 
@@ -71,17 +71,16 @@ input:focus{
     font-size: 24px;
     font-weight: bold;
     font-family: Helvetica;
-    background-color: black;
-    border:2px solid white;
-    transition: font-size 0.8s,width 0.8s,border 0.8s;
+    background-color: transparent;
+    border:2px solid #c6ac8f;
 }
 
 #invia:hover{
     width: 180px;
     font-size: 28px;
-    border: 2px solid #FFC12C;
-    color: #FFC12C;
-    transition: font-size 0.8s,width 0.8s,border 0.8s,color 0.8s;
+    border: 2px solid #c6ac8f;
+    color: #c6ac8f;
+
 }
 
 
@@ -93,16 +92,34 @@ input:focus{
     font-size: 24px;
     font-weight: bold;
     font-family: Helvetica;
-    background-color: black;
-    border:2px solid white;
-    transition: font-size 0.8s,width 0.8s,border 0.8s;
+    background-color: transparent;
+    border:2px solid #c6ac8f;
+
 }
 
 #SignUp:hover{
     width: 180px;
     font-size: 28px;
-    border: 2px solid #FFC12C;
-    color: #FFC12C;
-    transition: font-size 0.8s,width 0.8s,border 0.8s,color 0.8s;
+    border: 2px solid #c6ac8f;
+    color: #c6ac8f;
+
 }
 
+
+.logo-home-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.logo-home-link img {
+    width: 80px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+
+.logo-home-link img:hover {
+    transform: scale(1.1);
+}

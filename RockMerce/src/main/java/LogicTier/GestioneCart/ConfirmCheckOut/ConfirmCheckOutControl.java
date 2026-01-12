@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 @WebServlet(value = "/ConfirmCheckOutControl")
@@ -29,7 +30,12 @@ public class ConfirmCheckOutControl extends HttpServlet {
         Customer customer = (Customer) session.getAttribute("customer");
 
         CheckOutService checkOutService=new CheckOutService();
-        Checkout checkout=checkOutService.confirmCheckOut(customer);
+        Checkout checkout= null;
+        try {
+            checkout = checkOutService.confirmCheckOut(customer);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         request.setAttribute("checkout",checkout);
 

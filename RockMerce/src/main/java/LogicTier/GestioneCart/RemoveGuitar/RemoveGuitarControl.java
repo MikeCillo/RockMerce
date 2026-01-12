@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(value = "/RemoveGuitarControl")
 
@@ -31,7 +32,12 @@ public class RemoveGuitarControl extends HttpServlet {
 
          if(customer !=null){
              CartService cartService =new CartService();
-             Cart cart= cartService.removeGuitarFromCart(customer,idg);
+             Cart cart= null;
+             try {
+                 cart = cartService.removeGuitarFromCart(customer,idg);
+             } catch (SQLException e) {
+                 throw new RuntimeException(e);
+             }
 
              request.setAttribute("guitars", cart.getGuitars());
              request.setAttribute("cart", cart);

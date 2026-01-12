@@ -16,20 +16,20 @@
     padding: 20px;
 }
 
-
-#product:hover > #gImage{                        /*HOVER GUITAR'S IMAGE ZONE*/
+/*
+#product:hover > #gImage{                        //HOVER GUITAR'S IMAGE ZONE
     width: 550px;
     height: 550px;
     transition: width 1.0s,height 1.0s;
 }
-
+*/
 
 #Details{
     margin-top: 100px;/*GUITAR'S PROPERTIES*/
     background-color:transparent;
     font-family: Helvetica;
     font-size: 28px;
-    color: black;
+    color: #eae0d5;
     float: left;
     display: inline-block;
 }
@@ -55,13 +55,13 @@
     background-color: black;
     border:none;
     font-size: 24px;
-    color: white;
+    color: #eae0d5;
     transition: color 0.5s,font-size 0.5s,border 0.5s;
 }
 
 #btnCart:hover{                          /*ADD TO CART HOVER */
-    border:2px solid #FFC12C;
-    color: #FFC12C;
+    border:2px solid #c6ac8f;
+    color: #c6ac8f;
     font-size: 28px;
     transition: color 0.5s,font-size 0.5s,border 0.5s;
 }
@@ -74,7 +74,7 @@
     float: left;
     margin-left: 3%;
     background-color:transparent;
-    color: black;
+    color: #eae0d5;
     text-align: left;
     font-size: 26px;
     padding: 20px;
@@ -91,7 +91,7 @@ iframe{                          /*YOUTUBE GUITAR'S VIDEO */
 
 
  #Shop{
-     background: #1C889E;
+     background: #c6ac8f;
      color: white;
  }
 
@@ -129,12 +129,6 @@ iframe{                          /*YOUTUBE GUITAR'S VIDEO */
     }
 
 
-
-    #product:hover > #gImage{                        /*HOVER GUITAR'S IMAGE ZONE*/
-        width: 370px;
-        height: 370px;
-        transition: width 1.0s,height 1.0s;
-    }
 
     #YTsrc{
         width: 400px;

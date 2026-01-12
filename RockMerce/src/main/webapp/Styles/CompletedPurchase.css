@@ -1,7 +1,6 @@
-body{                                                       /*Sfondo*/
-    background-image: url("../Images/blackWallLamp.jpg") ;
-    background-size: cover;
-
+body {
+    background-image: url("../Images/BrownBackground2.jpg");
+    background-size: 30%;
 }
 
 

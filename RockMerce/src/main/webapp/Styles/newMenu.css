@@ -1,111 +1,115 @@
-body{                                                       /*Sfondo*/
-    background-image: url("../Images/WhiteWall.jpg");
+body {
+    /* Nota: L'immagine rimane, ma sparirà se si attiva l'alto contrasto grazie a global.css */
+    background-image: url("../Images/BrownBackground2.jpg");
+    background-size: 30%;
 }
 
-li{
+li {
     float: left;
 }
 
-
-.menu {                                          /*ul personalizzazione*/
+.menu {
     list-style-type: none;
     font-family: "Phosphate";
     padding: 4px;
 }
 
-
-.menu button {                                            /* li personalizzazione */
+.menu button {
     min-width: 130px;
     height: 50px;
     border-radius: 30%;
-    background-color: black;
-    border: none;
+
+    /* QUI HO USATO LE VARIABILI */
+    background-color: var(--btn-bg);     /* Era black */
+    color: var(--btn-text);              /* Era white */
+    border: var(--btn-border);           /* Variabile per gestire il bordo in alto contrasto */
+
     font-size: 18px;
     font-family: Phosphate;
-    color: white;
-    transition: font-size 0.5s,background-color 0.5s ;
+    transition: font-size 0.5s, background-color 0.5s, color 0.5s, border 0.5s;
 }
 
-
-
-.Right{                                          /* li di destra posizionamento */
+.Right {
     float: right;
-    margin:0;
+    margin: 0;
     margin-top: 5px;
 }
 
+.menu button:hover {
+    /* QUI HO USATO LA VARIABILE ACCENT */
+    background-color: var(--accent-color); /* Era #1C889E */
 
+    /* Aggiungo cambio colore testo per sicurezza in alto contrasto */
+    color: var(--btn-bg);
 
-.menu  button:hover {                /* hover btn  */
-    background-color: #1C889E;
     font-size: 22px;
-    transition:  background-color 0.9s, font-size 0.5s;
+    transition: background-color 0.9s, font-size 0.5s;
 }
 
-
-
-#logo{                                                      /*posizionamento del bottone con il logo*/
+#logo {
     display: block;
     background: transparent;
     margin-left: 45%;
     margin-top: 2%;
     border: none;
-
 }
 
-
-#logo:hover {                                                /*hover logo*/
-    transform: rotateX(360deg);
-    transition: transform 1.5s ;
-}
-
-
-.dropdown-content {                                 /* LOGGED USER BUTTON */
+.dropdown-content {
     display: none;
-    background-color: white;
-    color: black;
+
+    /* QUI HO USATO LE VARIABILI */
+    background-color: var(--dropdown-bg); /* Era white */
+    color: var(--dropdown-text);          /* Era black */
+
     min-width: 120px;
     height: 40px;
+    border: var(--btn-border); /* Bordo anche qui per l'alto contrasto */
 }
 
 .dropdown-content a {
-    color: black;
+    /* QUI HO USATO LA VARIABILE */
+    color: var(--dropdown-text); /* Era black */
+
     text-decoration: none;
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #1C889E;color: white}
-.dropdown:hover .dropdown-content {display: block;background-color: transparent}
-.dropdown:hover .dropbtn {background-color: #1C889E;}
+.dropdown-content a:hover {
+    /* QUI HO USATO LE VARIABILI */
+    background-color: var(--accent-color); /* Era #1C889E */
+    color: var(--btn-bg);                  /* Era white */
+}
 
+.dropdown:hover .dropdown-content {
+    display: block;
+    /* Rimosso background-color: transparent che poteva dare problemi di leggibilità */
+}
 
+.dropdown:hover .dropbtn {
+    background-color: var(--accent-color); /* Era #1C889E */
+    color: var(--btn-bg);
 
+}
 
-
-
-/*MEDIA QUERY */
-
-@media screen and (max-width:850px){
-
-
-    .menu li{
+/* MEDIA QUERY */
+@media screen and (max-width: 850px) {
+    .menu li {
         width: 100%;
     }
 
-    .menu button{
+    .menu button {
         display: block;
         width: 100%;
-
     }
 
-
-    #logo{
+    #logo {
         float: none;
         margin-left: 34%;
     }
 
-    #logo img{
+    #logo img {
         width: 200px;
         height: 200px;
     }
 }
+

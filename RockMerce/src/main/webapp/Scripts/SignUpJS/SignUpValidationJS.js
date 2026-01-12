@@ -262,22 +262,26 @@ function valCvv(){
 
 
 function DateGenerator(){
+
     const month = ["01","02","03","04","05","06","07","08","09","10","11","12"];
 
+    // Ciclo per i mesi (funzionante)
     for(i=0;i<12;i++){
-        x = document.getElementById("expMonth");
-        option = document.createElement("option");
+        const x = document.getElementById("expMonth");
+        const option = document.createElement("option");
         option.text = month[i];
         x.add(option);
     }
-    const d = new Date();
-    let year = d.getFullYear()+1;
 
+    const d = new Date();
+    // RISOLUZIONE: Usa 'const' per year poiché non viene riassegnato
+    const year = d.getFullYear()+1;
+
+    // Ciclo per gli anni
     for( i=year;i<=(year+11);i++){
-        x = document.getElementById("expYear");
-        option = document.createElement("option");
+        const x = document.getElementById("expYear");
+        const option = document.createElement("option");
         option.text = String(i);
         x.add(option);
     }
-
 }
